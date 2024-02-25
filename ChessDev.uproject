@@ -44,6 +44,11 @@
 		{
 			"Name": "AdvancedSessions",
 			"Enabled": false
+		},
+		{
+			"Name": "EOSIntegrationKit",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/dba0aa05bdd144e69405653a387ad63e"
 		}
 	],
 	"TargetPlatforms": [
