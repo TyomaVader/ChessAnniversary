@@ -37,10 +37,10 @@ public:
 	/**
 	 * @brief Checks if the game is finished.
 	 * 
-	 * @return True if the game is finished, false otherwise.
+	 * @return 1 if white won, 2 if black won, 3 if it's a draw, 0 if game isn't finished yet.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "ChessEngine")
-	bool isGameFinished() const;
+	int isGameFinished() const;
 
 	/**
 	 * @brief Checks if the move is legal and makes it if it is.

@@ -38,14 +38,24 @@ void AChessEngine::setBoardPosition(const FString& shortFen, uint8 enPassant, bo
 	);
 }
 
-bool AChessEngine::isGameFinished() const
+int AChessEngine::isGameFinished() const
 {
-	if (this->whiteVictory() || this->blackVictory() || this->draw())
+	if (this->whiteVictory())
 	{
-		return true;
+		return 1;
+	} 
+	else if (this->blackVictory())
+	{
+		return 2;
 	}
-
-	return false;
+    else if (this->draw())
+    {
+        return 3;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 bool AChessEngine::whiteVictory() const
