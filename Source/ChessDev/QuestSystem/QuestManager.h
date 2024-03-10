@@ -1,25 +1,40 @@
+// Copyright (c) 2024 Artsiom Chmutau
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "Components/ActorComponent.h"
 #include "Quest.h"
+#include "../GameInstanceBase.h"
 #include "QuestManager.generated.h"
 
-UCLASS(Blueprintable)
-class CHESSDEV_API UQuestManager : public UObject
+class UQuestSave;
+
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+class CHESSDEV_API UQuestManager : public UActorComponent
 {
     GENERATED_BODY()
 
 public:
-    UPROPERTY(BlueprintReadOnly)
-    TArray<UQuest*> ActiveQuests;
-
-    UPROPERTY(BlueprintReadOnly)
-    TArray<UQuest*> CompletedQuests;
+    UQuestManager();
 
     UFUNCTION(BlueprintCallable)
-    void AddQuest(UQuest* NewQuest);
+    void AddQuest(const FQuestStruct NewQuest);
 
-    UFUNCTION(BlueprintCallable)
-    void RemoveQuest(UQuest* QuestToRemove);
+protected:
+    // Called when the game starts
+    virtual void BeginPlay() override;
+
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+public:
+    UPROPERTY(BlueprintReadOnly, Category = "QuestSystem")
+    TArray<UQuest*> Quests;
+
+private:
+    UPROPERTY()
+    UQuestSave* QuestSave;
+
+    UPROPERTY()
+    UGameInstanceBase* GameInstance;
 };

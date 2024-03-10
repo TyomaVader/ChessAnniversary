@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "QuestStep.h"
+#include "QuestStruct.h"
 #include "Quest.generated.h"
 
 /**
@@ -16,24 +17,23 @@ class CHESSDEV_API UQuest : public UObject
 	GENERATED_BODY()
 
 public:
+    UQuest();
+
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     FString QuestName;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    FString QuestDescription;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<UQuestStep*> QuestSteps;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    FString Description;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    FString Status;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     float Progress;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    FString Reward;
+    UFUNCTION(BlueprintCallable)
+    void Init(const FQuestStruct& QuestStruct);
 
     UFUNCTION(BlueprintCallable)
-    void AddQuestStep(UQuestStep* NewStep);
+    FQuestStruct GetQuestStruct() const;
 };

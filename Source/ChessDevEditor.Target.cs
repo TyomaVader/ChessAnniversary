@@ -11,5 +11,7 @@ public class ChessDevEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
 		ExtraModuleNames.Add("ChessDev");
+
+		bUseUnityBuild = false;
 	}
 }
