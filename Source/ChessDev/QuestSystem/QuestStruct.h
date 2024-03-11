@@ -24,5 +24,5 @@ struct FQuestStruct : public FTableRowBase
     TArray<FQuestStepStruct> QuestSteps;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float Progress;
+    int Progress;
 };

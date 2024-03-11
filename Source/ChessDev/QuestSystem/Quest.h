@@ -29,7 +29,7 @@ public:
     TArray<UQuestStep*> QuestSteps;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    float Progress;
+    int Progress;
 
     UFUNCTION(BlueprintCallable)
     void Init(const FQuestStruct& QuestStruct);

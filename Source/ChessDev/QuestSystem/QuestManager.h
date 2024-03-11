@@ -10,7 +10,7 @@
 
 class UQuestSave;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CHESSDEV_API UQuestManager : public UActorComponent
 {
     GENERATED_BODY()

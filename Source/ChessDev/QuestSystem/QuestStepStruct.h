@@ -14,7 +14,7 @@ struct FQuestStepStruct : public FTableRowBase
     FString StepDescription;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float StepProgress;
+    int StepProgress;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     UTrigger* StepTrigger;

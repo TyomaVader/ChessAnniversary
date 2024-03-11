@@ -20,7 +20,15 @@ void UQuestManager::BeginPlay()
     GameInstance = Cast<UGameInstanceBase>(UGameplayStatics::GetGameInstance(this));
 
     if (!GameInstance)
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] GameInstance is NOT valid!"));
+        }
+        
         return;
+    }
+
 
     QuestSave = GameInstance->QuestSave;
 
@@ -32,6 +40,12 @@ void UQuestManager::BeginPlay()
         GetWorld()->GetTimerManager().SetTimer(Handle, [this]()
         {
             QuestSave->LoadQuestManager(this);
+
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("QuestManager loaded"));
+            }
+            
         }, 0.0001F, false);
     }, 0.0001F, false);
 }
@@ -48,6 +62,11 @@ void UQuestManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
         }
 
         QuestSave->SaveQuestManager(questStructs);
+
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("QuestManager saved"));
+        }
     }
 
 

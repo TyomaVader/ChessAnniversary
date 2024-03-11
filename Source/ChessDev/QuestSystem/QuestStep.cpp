@@ -11,9 +11,20 @@ void UQuestStep::Init(const FQuestStepStruct& StepStruct)
     StepDescription = StepStruct.StepDescription;
     StepProgress = StepStruct.StepProgress;
 
-    if (StepStruct.StepTrigger)
+    if (IsValid(StepStruct.StepTrigger))
     {
         this->BindToTrigger(StepStruct.StepTrigger);
+
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("QuestStep bound to trigger"));
+        }
+    } else
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Cannot initialize QuestStep. Trigger is NOT valid!"));
+        }
     }
 }
 
@@ -33,6 +44,12 @@ void UQuestStep::BindToTrigger(UTrigger* Trigger)
     {
         StepTrigger = Trigger;
         StepTrigger->OnTriggerActivated.AddDynamic(this, &UQuestStep::UpdateProgress);
+    } else
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] QuestStep could not bind to trigger. Trigger is NOT valid!"));
+        }
     }
 }
 
@@ -40,4 +57,9 @@ void UQuestStep::UpdateProgress()
 {
     // TODO: Implement this function
     StepProgress += 1;
+
+    if (GEngine)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, FString::Printf(TEXT("QuestStep progress updated. Progress: %d"), StepProgress));
+    }
 }
