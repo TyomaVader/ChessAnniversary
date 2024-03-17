@@ -9,8 +9,8 @@ public class ChessDevTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
-		ExtraModuleNames.Add("ChessDev");
+		// IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
+		ExtraModuleNames.AddRange(new string[] { "ChessDev"});
 
 		bUseUnityBuild = false;
 	}

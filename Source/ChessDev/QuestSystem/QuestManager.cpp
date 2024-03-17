@@ -41,10 +41,7 @@ void UQuestManager::BeginPlay()
         {
             QuestSave->LoadQuestManager(this);
 
-            if (GEngine)
-            {
-                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("QuestManager loaded"));
-            }
+            UE_LOG(LogTemp, Display, TEXT("QuestManager loaded"));
             
         }, 0.0001F, false);
     }, 0.0001F, false);
@@ -63,12 +60,8 @@ void UQuestManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
         QuestSave->SaveQuestManager(questStructs);
 
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("QuestManager saved"));
-        }
+        UE_LOG(LogTemp, Display, TEXT("QuestManager saved"));
     }
-
 
     Super::EndPlay(EndPlayReason);
 }
