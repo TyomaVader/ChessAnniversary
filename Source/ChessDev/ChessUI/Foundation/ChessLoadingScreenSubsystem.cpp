@@ -11,9 +11,7 @@ class UUserWidget;
 //////////////////////////////////////////////////////////////////////
 // UChessLoadingScreenSubsystem
 
-UChessLoadingScreenSubsystem::UChessLoadingScreenSubsystem()
-{
-}
+UChessLoadingScreenSubsystem::UChessLoadingScreenSubsystem() {}
 
 void UChessLoadingScreenSubsystem::SetLoadingScreenContentWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
