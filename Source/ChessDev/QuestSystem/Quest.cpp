@@ -9,7 +9,7 @@ UQuest::UQuest()
     Progress = 0;
 }
 
-void UQuest::Init(const FQuestStruct& QuestStruct)
+void UQuest::Init(const FQuestStruct& QuestStruct, const TArray<UTrigger*>& Triggers)
 {
     QuestName = QuestStruct.QuestName;
     QuestDescription = QuestStruct.QuestDescription;
@@ -18,7 +18,7 @@ void UQuest::Init(const FQuestStruct& QuestStruct)
     for (const FQuestStepStruct& Step : QuestStruct.QuestSteps)
     {
         UQuestStep* questStep = NewObject<UQuestStep>();
-        questStep->Init(Step);
+        questStep->Init(Step, Triggers);
 
         QuestSteps.Add(questStep);
     }

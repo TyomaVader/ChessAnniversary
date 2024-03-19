@@ -32,7 +32,7 @@ public:
     int Progress;
 
     UFUNCTION(BlueprintCallable)
-    void Init(const FQuestStruct& QuestStruct);
+    void Init(const FQuestStruct& QuestStruct, const TArray<UTrigger*>& Triggers);
 
     UFUNCTION(BlueprintCallable)
     FQuestStruct GetQuestStruct() const;

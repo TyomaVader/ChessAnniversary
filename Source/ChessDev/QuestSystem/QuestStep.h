@@ -21,10 +21,16 @@ public:
     int StepProgress;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    int StepProgressTotal;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    int StepTriggerId;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
     UTrigger* StepTrigger;
 
     UFUNCTION(BlueprintCallable)
-    void Init(const FQuestStepStruct& StepStruct);
+    void Init(const FQuestStepStruct& StepStruct, const TArray<UTrigger*>& Triggers);
 
     UFUNCTION(BlueprintCallable)
     FQuestStepStruct GetQuestStepStruct() const;

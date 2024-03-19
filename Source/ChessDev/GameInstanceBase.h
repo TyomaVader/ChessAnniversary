@@ -21,7 +21,4 @@ class CHESSDEV_API UGameInstanceBase : public UGameInstance
 
 public:
     virtual void Init() override;
-
-    UPROPERTY(VisibleAnywhere)
-    UQuestSave* QuestSave;
 };

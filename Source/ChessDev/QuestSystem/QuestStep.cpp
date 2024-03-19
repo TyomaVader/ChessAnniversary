@@ -6,19 +6,15 @@ UQuestStep::UQuestStep()
     StepProgress = 0;
 }
 
-void UQuestStep::Init(const FQuestStepStruct& StepStruct)
+void UQuestStep::Init(const FQuestStepStruct& StepStruct, const TArray<UTrigger*>& Triggers)
 {
     StepDescription = StepStruct.StepDescription;
     StepProgress = StepStruct.StepProgress;
+    StepTriggerId = StepStruct.StepTriggerId;
 
-    if (IsValid(StepStruct.StepTrigger))
+    if (IsValid(Triggers[StepTriggerId]))
     {
-        this->BindToTrigger(StepStruct.StepTrigger);
-
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("QuestStep bound to trigger"));
-        }
+        this->BindToTrigger(Triggers[StepTriggerId]);
     } else
     {
         if (GEngine)
@@ -33,7 +29,8 @@ FQuestStepStruct UQuestStep::GetQuestStepStruct() const
     FQuestStepStruct StepStruct;
     StepStruct.StepDescription = StepDescription;
     StepStruct.StepProgress = StepProgress;
-    StepStruct.StepTrigger = StepTrigger;
+    StepStruct.StepProgressTotal = StepProgressTotal;
+    StepStruct.StepTriggerId = StepTriggerId;
 
     return StepStruct;
 }
@@ -42,8 +39,7 @@ void UQuestStep::BindToTrigger(UTrigger* Trigger)
 {
     if (Trigger)
     {
-        StepTrigger = Trigger;
-        StepTrigger->OnTriggerActivated.AddDynamic(this, &UQuestStep::UpdateProgress);
+        Trigger->OnTriggerActivated.AddDynamic(this, &UQuestStep::UpdateProgress);
     } else
     {
         if (GEngine)

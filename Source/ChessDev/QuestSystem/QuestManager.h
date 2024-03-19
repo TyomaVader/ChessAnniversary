@@ -19,7 +19,13 @@ public:
     UQuestManager();
 
     UFUNCTION(BlueprintCallable)
-    void AddQuest(const FQuestStruct NewQuest);
+    void AddQuest(const FQuestStruct NewQuest, const TArray<UTrigger*>& Triggers);
+
+    UFUNCTION(BlueprintCallable)
+    TArray<uint8> Save();
+
+    UFUNCTION(BlueprintCallable)
+    void Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Triggers);
 
 protected:
     // Called when the game starts
@@ -32,9 +38,6 @@ public:
     TArray<UQuest*> Quests;
 
 private:
-    UPROPERTY()
-    UQuestSave* QuestSave;
-
     UPROPERTY()
     UGameInstanceBase* GameInstance;
 };

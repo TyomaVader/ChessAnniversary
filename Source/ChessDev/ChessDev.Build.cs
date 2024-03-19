@@ -17,7 +17,7 @@ public class ChessDev : ModuleRules
 				"InputCore",
 				"OnlineSubsystemEOS",
 				"OnlineSubsystemUtils",
-				"CommonLoadingScreen" 
+				"CommonLoadingScreen"
 			}
 		);
 

@@ -14,15 +14,18 @@ struct FQuestStruct : public FTableRowBase
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(BlueprintReadOnly)
     FString QuestName;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(BlueprintReadOnly)
     FString QuestDescription;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(BlueprintReadOnly)
     TArray<FQuestStepStruct> QuestSteps;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int Progress;
+
+    UPROPERTY(BlueprintReadOnly)
+    int ProgressTotal;
 };
