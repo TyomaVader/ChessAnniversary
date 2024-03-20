@@ -1,20 +1,16 @@
-{
-  "id": "quest_S29_snapshot_p01_q14",
-  "name": "Stage 14 of 14 - Use a Scrying Pool to speak with The Oracle",
-  "description": "Your fate becomes clearer to me. Let us discuss it. - The Oracle",
-  "shortDescription": "Stage 14 of 14 - Use a Scrying Pool to speak with The Oracle",
-  "categoryHeader": "Oracle's Snapshot",
-  "enabled": false,
-  "enabledDate": null,
-  "parentQuest": null,
-  "progressTotal": 1,
-  "tags": [
-    "ChallengeCategory.XP",
-    "QuestCategory.BR.S29.Snapshot.01"
-  ],
-  "reward": {
-    "xp": 0,
-    "items": []
-  },
-  "locations": []
+{
+  "quests": [
+      {
+          "name": "TestName",
+          "description": "TestDescription",
+          "progressTotal": 10,
+          "questSteps": [
+              {
+                  "description": "TestDescription",
+                  "progressTotal": 2,
+                  "triggerId": 0
+              }
+          ]
+      }
+  ]
 }
