@@ -8,7 +8,7 @@ OpeningBook::~OpeningBook() {}
 
 OpeningBook::OpeningBook(std::string path)
 {
-    path = std::string(TCHAR_TO_UTF8(*FPaths::GetProjectFilePath())) + path;
+    path = std::string(TCHAR_TO_UTF8(*FPaths::ProjectContentDir())) + path;
     ifstream file(path);
 
     if (!file.is_open())

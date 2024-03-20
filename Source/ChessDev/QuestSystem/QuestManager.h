@@ -2,13 +2,15 @@
 
 #pragma once
 
+#include <fstream>
+
 #include "CoreMinimal.h"
+#include "Misc/Paths.h"
+#include "Dom/JsonObject.h"
 #include "Components/ActorComponent.h"
 #include "Quest.h"
 #include "../GameInstanceBase.h"
 #include "QuestManager.generated.h"
-
-class UQuestSave;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CHESSDEV_API UQuestManager : public UActorComponent

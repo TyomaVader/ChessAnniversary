@@ -7,10 +7,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceBase.generated.h"
 
-
-class UQuestSave;
-
-
 /**
  * 
  */
