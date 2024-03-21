@@ -15,19 +15,6 @@ UQuestManager::UQuestManager()
 void UQuestManager::BeginPlay()
 {
     Super::BeginPlay();
-
-    // GameInstance = Cast<UGameInstanceBase>(UGameplayStatics::GetGameInstance(this));
-
-    // if (!GameInstance)
-    // {
-    //     if (GEngine)
-    //     {
-    //         GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] GameInstance is NOT valid!"));
-    //         UE_LOG(LogTemp, Error, TEXT("[ERROR] GameInstance is NOT valid!"));
-    //     }
-        
-    //     return;
-    // }
 }
 
 TArray<uint8> UQuestManager::Save()
@@ -45,7 +32,8 @@ void UQuestManager::Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Tri
 {
     // Byte array is a file with quests. If PlayerStorage is empty, this the file with all the existing quests from the TitleStorage. Files are in JSON format.
 
-    // TArray<uint8>& -> JSON
+
+    // Load the Data to the local Quests.json
 
     FString path = *FPaths::ProjectContentDir().Append("/Quests.json");
     std::fstream stream(std::string(TCHAR_TO_UTF8(*path)));
@@ -71,23 +59,49 @@ void UQuestManager::Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Tri
     {
         GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Quests.json loaded."));
     }
-    
-    // JSON -> TArray<FQuestStruct>
-    // JSON File -> FString -> FJsonObject -> TArray<FQuestStruct>
-    // https://www.youtube.com/watch?v=4wJ45mrzrkM&t=9s
-    // TArray<TSharedPtr<FJsonValue>> JsonQuestsArray = JsonObject->GetArrayField("quests");
 
     stream.close();
 
 
-    return;
+    // Parse the Json to Quest objects
 
+    bool bSuccess;
 
-    TArray<FQuestStruct> PlayerQuests; // Place quests from the JSON file to this array
+    TSharedPtr<FJsonObject> JsonObject = UReadWriteJson::ReadJson(path, bSuccess);
+    TArray<TSharedPtr<FJsonValue>> JsonQuestsArray = JsonObject->GetArrayField("quests");
+
+    TArray<FQuestStruct> PlayerQuests;
+
+    for (TSharedPtr<FJsonValue> QuestJsonValue : JsonQuestsArray)
+    {
+        FQuestStruct QuestStruct;
+
+        TSharedPtr<FJsonObject> QuestJsonObject = QuestJsonValue->AsObject();
+
+        QuestStruct.QuestName = QuestJsonObject->GetStringField("name");
+        QuestStruct.QuestDescription = QuestJsonObject->GetStringField("description");
+        QuestStruct.ProgressTotal = QuestJsonObject->GetIntegerField("progressTotal");
+
+        // TODO: If Json from PlayerStorage, load progress
+
+        TArray<TSharedPtr<FJsonValue>> JsonQuestStepsArray = JsonObject->GetArrayField("questSteps");
+
+        for (TSharedPtr<FJsonValue> QuestStepJsonValue : JsonQuestStepsArray)
+        {
+            FQuestStepStruct QuestStepStruct;
+
+            TSharedPtr<FJsonObject> QuestStepJsonObject = QuestStepJsonValue->AsObject();
+
+            QuestStepStruct.StepDescription = QuestStepJsonObject->GetStringField("description");
+            QuestStepStruct.StepProgressTotal = QuestStepJsonObject->GetIntegerField("progressTotal");
+            QuestStepStruct.StepTriggerId = QuestStepJsonObject->GetIntegerField("triggerId");
+        }
+
+        PlayerQuests.Add(QuestStruct);
+    }
 
     for (FQuestStruct PlayerQuest : PlayerQuests)
         this->AddQuest(PlayerQuest, Triggers);
-
 }
 
 void UQuestManager::EndPlay(const EEndPlayReason::Type EndPlayReason)

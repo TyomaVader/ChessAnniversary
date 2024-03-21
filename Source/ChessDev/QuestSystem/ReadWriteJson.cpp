@@ -4,10 +4,10 @@
 #include "JsonUtilities.h"
 #include "Serialization/JsonSerializer.h"
 
-TSharedPtr<FJsonObject> UReadWriteJson::ReadJson(FString JsonFilePath, bool& bOutSuccess, FString& OutInfoMsg)
+TSharedPtr<FJsonObject> UReadWriteJson::ReadJson(FString JsonFilePath, bool& bOutSuccess)
 {
     //Try to read file
-    FString JsonString = UReadWriteFile::ReadStringFromFile(JsonFilePath, bOutSuccess, OutInfoMsg);
+    FString JsonString = UReadWriteFile::ReadStringFromFile(JsonFilePath, bOutSuccess);
     if (!bOutSuccess)
     {
         return nullptr;
@@ -16,19 +16,19 @@ TSharedPtr<FJsonObject> UReadWriteJson::ReadJson(FString JsonFilePath, bool& bOu
     TSharedPtr<FJsonObject> RetJsonObject;
 
     //Try to convert string to json object
-    if(!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(JsonString), RetJsonObject))
+    if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(JsonString), RetJsonObject))
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("Failed to convert string to json object"));
+        UE_LOG(LogTemp, Error, TEXT("Failed to convert string to json object"));
         return nullptr;
     }
 
     bOutSuccess = true;
-    OutInfoMsg = FString::Printf(TEXT("Json object created successfully"));
+    UE_LOG(LogTemp, Display, TEXT("Json object created successfully"));
     return RetJsonObject;
 }
 
-void UReadWriteJson::WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess, FString& OutInfoMsg)
+void UReadWriteJson::WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess)
 {
     FString JsonString;
 
@@ -36,25 +36,25 @@ void UReadWriteJson::WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& Js
     if(!FJsonSerializer::Serialize(JsonObject.ToSharedRef(), TJsonWriterFactory<TCHAR>::Create(&JsonString, 0)))
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("Failed to convert json object to string"));
+        UE_LOG(LogTemp, Error, TEXT("Failed to convert json object to string"));
         return;
     }
 
     //Try to write string to file
-    UReadWriteFile::WriteStringToFile(JsonFilePath, JsonString, bOutSuccess, OutInfoMsg);
+    UReadWriteFile::WriteStringToFile(JsonFilePath, JsonString, bOutSuccess);
     if(!bOutSuccess)
     {
         return;
     }
     
     bOutSuccess = true;
-    OutInfoMsg = FString::Printf(TEXT("Json object written successfully"));
+    UE_LOG(LogTemp, Display, TEXT("Json object written successfully"));
 }
 
-FQuestStruct UReadWriteJson::ReadStructFromJson(FString JsonFilePath, FQuestStruct& Struct, bool& bOutSuccess, FString& OutInfoMsg)
+FQuestStruct UReadWriteJson::ReadStructFromJson(FString JsonFilePath, FQuestStruct& Struct, bool& bOutSuccess)
 {
     //Try to read generic json object from file
-    TSharedPtr<FJsonObject> JsonObject = ReadJson(JsonFilePath, bOutSuccess, OutInfoMsg);
+    TSharedPtr<FJsonObject> JsonObject = ReadJson(JsonFilePath, bOutSuccess);
     if(!bOutSuccess)
     {
         return FQuestStruct();
@@ -66,17 +66,17 @@ FQuestStruct UReadWriteJson::ReadStructFromJson(FString JsonFilePath, FQuestStru
     if(!FJsonObjectConverter::JsonObjectToUStruct<FQuestStruct>(JsonObject.ToSharedRef(), &RetStruct))
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("Failed to convert json object to struct"));
+        UE_LOG(LogTemp, Error, TEXT("Failed to convert json object to struct"));
         return FQuestStruct();
     }
 
     bOutSuccess = true;
-    OutInfoMsg = FString::Printf(TEXT("Struct created successfully"));
+    UE_LOG(LogTemp, Display, TEXT("Struct created successfully"));
     return RetStruct;
 }
 
 
-void UReadWriteJson::WriteStructToJson(FString JsonFilePath, const FQuestStruct& Struct, bool& bOutSuccess, FString& OutInfoMsg)
+void UReadWriteJson::WriteStructToJson(FString JsonFilePath, const FQuestStruct& Struct, bool& bOutSuccess)
 {
     //Try to convert struct to generic json object
     TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(Struct);
@@ -84,11 +84,11 @@ void UReadWriteJson::WriteStructToJson(FString JsonFilePath, const FQuestStruct&
     if(!JsonObject.IsValid())
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("Failed to convert struct to json object"));
+        UE_LOG(LogTemp, Error, TEXT("Failed to convert struct to json object"));
         return;
     }
     
     //Try to write generic json object to file
-    WriteJson(JsonFilePath, JsonObject, bOutSuccess, OutInfoMsg);
+    WriteJson(JsonFilePath, JsonObject, bOutSuccess);
 }
 

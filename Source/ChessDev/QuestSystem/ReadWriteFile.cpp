@@ -1,12 +1,12 @@
 #include "ReadWriteFile.h"
 
-FString UReadWriteFile::ReadStringFromFile(FString FileName, bool& bOutSuccess, FString& OutInfoMsg)
+FString UReadWriteFile::ReadStringFromFile(FString FileName, bool& bOutSuccess)
 {
     //Check if file exists
     if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FileName))
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("File does not exist"));
+        UE_LOG(LogTemp, Error, TEXT("File does not exist"));
         return "";
     }
 
@@ -16,26 +16,26 @@ FString UReadWriteFile::ReadStringFromFile(FString FileName, bool& bOutSuccess, 
     if(!FFileHelper::LoadFileToString(RetString, *FileName))
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("Failed to read file. Maybe not file"));
+        UE_LOG(LogTemp, Error, TEXT("Failed to read file. Maybe not file"));
         return "";
     }
 
     bOutSuccess = true;
-    OutInfoMsg = FString::Printf(TEXT("File read successfully"));
+    UE_LOG(LogTemp, Display, TEXT("File read successfully"));
     return RetString;
 
 }
 
-void UReadWriteFile::WriteStringToFile(FString FileName, FString StringToWrite, bool& bOutSuccess, FString& OutInfoMsg)
+void UReadWriteFile::WriteStringToFile(FString FileName, FString StringToWrite, bool& bOutSuccess)
 {
     //Try to write string to file
     if(!FFileHelper::SaveStringToFile(StringToWrite, *FileName))
     {
         bOutSuccess = false;
-        OutInfoMsg = FString::Printf(TEXT("Failed to write to file"));
+        UE_LOG(LogTemp, Error, TEXT("Failed to write to file"));
         return;
     }
 
     bOutSuccess = true;
-    OutInfoMsg = FString::Printf(TEXT("File written successfully"));
+    UE_LOG(LogTemp, Display, TEXT("File written successfully"));
 }

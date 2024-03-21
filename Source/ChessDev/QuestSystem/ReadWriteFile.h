@@ -8,9 +8,9 @@ class UReadWriteFile : public UBlueprintFunctionLibrary
 
 public:
     UFUNCTION(BlueprintCallable, Category = "File IO")
-    static FString ReadStringFromFile(FString FileName, bool& bOutSuccess, FString& OutInfoMsg);
+    static FString ReadStringFromFile(FString FileName, bool& bOutSuccess);
 
     UFUNCTION(BlueprintCallable, Category = "File IO")
-    static void WriteStringToFile(FString FileName, FString StringToWrite, bool& bOutSuccess, FString& OutInfoMsg);
+    static void WriteStringToFile(FString FileName, FString StringToWrite, bool& bOutSuccess);
 };
 

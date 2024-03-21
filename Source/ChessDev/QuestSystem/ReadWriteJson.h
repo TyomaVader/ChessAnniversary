@@ -12,12 +12,12 @@ class UReadWriteJson : public UBlueprintFunctionLibrary
 public:
 
     UFUNCTION(BlueprintCallable, Category = "File IO")
-    static FQuestStruct ReadStructFromJson(FString JsonFilePath, FQuestStruct& Struct, bool& bOutSuccess, FString& OutInfoMsg);
+    static FQuestStruct ReadStructFromJson(FString JsonFilePath, FQuestStruct& Struct, bool& bOutSuccess);
 
     UFUNCTION(BlueprintCallable, Category = "File IO")
-    static void WriteStructToJson(FString JsonFilePath, const FQuestStruct& Struct, bool& bOutSuccess, FString& OutInfoMsg);
+    static void WriteStructToJson(FString JsonFilePath, const FQuestStruct& Struct, bool& bOutSuccess);
 
-    static TSharedPtr<FJsonObject> ReadJson(FString JsonFilePath, bool& bOutSuccess, FString& OutInfoMsg);
+    static TSharedPtr<FJsonObject> ReadJson(FString JsonFilePath, bool& bOutSuccess);
 
-    static void WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess, FString& OutInfoMsg);
+    static void WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess);
 };

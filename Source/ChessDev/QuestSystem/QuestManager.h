@@ -4,6 +4,8 @@
 
 #include <fstream>
 
+#include "ReadWriteJson.h"
+
 #include "CoreMinimal.h"
 #include "Misc/Paths.h"
 #include "Dom/JsonObject.h"
