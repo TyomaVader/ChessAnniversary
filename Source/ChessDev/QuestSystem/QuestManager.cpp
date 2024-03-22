@@ -191,9 +191,12 @@ void UQuestManager::AddQuest(const FQuestStruct NewQuest, const TArray<UTrigger*
 {
     UQuest* quest = NewObject<UQuest>();
     quest->Init(NewQuest, Triggers);
-
-    quest->OnQuestProgressUpdated.AddDynamic(this, &UQuestManager::QuestProgressUpdateNotify);
-    quest->OnQuestStepProgressUpdated.AddDynamic(this, &UQuestManager::QuestStepProgressUpdateNotify);
+    
+    if (quest->Progress < quest->ProgressTotal)
+    {
+        quest->OnQuestProgressUpdated.AddDynamic(this, &UQuestManager::QuestProgressUpdateNotify);
+        quest->OnQuestStepProgressUpdated.AddDynamic(this, &UQuestManager::QuestStepProgressUpdateNotify);
+    }
 
     Quests.Add(quest);
 }
