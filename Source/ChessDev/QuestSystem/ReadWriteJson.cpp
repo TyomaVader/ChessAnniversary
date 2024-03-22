@@ -28,7 +28,7 @@ TSharedPtr<FJsonObject> UReadWriteJson::ReadJson(FString JsonFilePath, bool& bOu
     return RetJsonObject;
 }
 
-void UReadWriteJson::WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess)
+FString UReadWriteJson::WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess)
 {
     FString JsonString;
 
@@ -37,18 +37,20 @@ void UReadWriteJson::WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& Js
     {
         bOutSuccess = false;
         UE_LOG(LogTemp, Error, TEXT("[ERROR] Failed to convert json object to string"));
-        return;
+        return "";
     }
 
     //Try to write string to file
     UReadWriteFile::WriteStringToFile(JsonFilePath, JsonString, bOutSuccess);
     if(!bOutSuccess)
     {
-        return;
+        return "";
     }
     
     bOutSuccess = true;
     UE_LOG(LogTemp, Display, TEXT("[SUCCESS] Json object written successfully"));
+
+    return JsonString;
 }
 
 FQuestStruct UReadWriteJson::ReadStructFromJson(FString JsonFilePath, FQuestStruct& Struct, bool& bOutSuccess)

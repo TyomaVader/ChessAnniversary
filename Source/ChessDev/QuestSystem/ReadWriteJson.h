@@ -19,5 +19,5 @@ public:
 
     static TSharedPtr<FJsonObject> ReadJson(FString JsonFilePath, bool& bOutSuccess);
 
-    static void WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess);
+    static FString WriteJson(FString JsonFilePath, TSharedPtr<FJsonObject>& JsonObject, bool& bOutSuccess);
 };

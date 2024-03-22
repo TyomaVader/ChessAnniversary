@@ -20,7 +20,6 @@ void UQuestManager::BeginPlay()
 TArray<uint8> UQuestManager::Save()
 {
     // Parse the Quests into Json Objects
-
     TSharedPtr<FJsonObject> JsonObject = MakeShared<FJsonObject>();
     TArray<TSharedPtr<FJsonValue>> JsonQuestsArray;
 
@@ -61,11 +60,10 @@ TArray<uint8> UQuestManager::Save()
     JsonObject->SetArrayField("quests", JsonQuestsArray);
 
     // Save the Json to the local Quests.json
-
     bool bSuccess;
 
     FString path = *FPaths::ProjectContentDir().Append("/Quests.json");
-    UReadWriteJson::WriteJson(path, JsonObject, bSuccess);
+    FString jsonString = UReadWriteJson::WriteJson(path, JsonObject, bSuccess);
 
     if (!bSuccess)
     {
@@ -87,30 +85,8 @@ TArray<uint8> UQuestManager::Save()
     }
 
     // Upload the Data to the PlayerStorage
-
     TArray<uint8> Data;
-
-    std::fstream stream(std::string(TCHAR_TO_UTF8(*path)));
-
-    if (!stream.is_open())
-    {
-        UE_LOG(LogTemp, Error, TEXT("[ERROR] Couldn't open the Quests.json file."));
-
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Couldn't open the Quests.json file."));
-            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Path: %s"), *path));
-        }
-
-        return Data;
-    }
-
-    stream.seekg(0, std::ios::end);
-    Data.SetNum(stream.tellg());
-    stream.seekg(0);
-    stream.read(reinterpret_cast<char*>(Data.GetData()), Data.Num());
-
-    stream.close();
+    Data.Append((uint8*)TCHAR_TO_UTF8(*jsonString), jsonString.Len());
 
     if (GEngine)
     {
@@ -124,11 +100,9 @@ void UQuestManager::Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Tri
 {
     // Byte array is a file with quests. If PlayerStorage is empty, this the file with all the existing quests from the TitleStorage. Files are in JSON format.
 
-
     // Load the Data to the local Quests.json
-
     FString path = *FPaths::ProjectContentDir().Append("/Quests.json");
-    std::fstream stream(std::string(TCHAR_TO_UTF8(*path)));
+    std::ofstream stream(std::string(TCHAR_TO_UTF8(*path)));
 
     if (!stream.is_open())
     {
@@ -156,7 +130,6 @@ void UQuestManager::Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Tri
 
 
     // Parse the Json to Quest objects
-
     bool bSuccess;
 
     TSharedPtr<FJsonObject> JsonObject = UReadWriteJson::ReadJson(path, bSuccess);
@@ -213,20 +186,6 @@ void UQuestManager::Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Tri
 
 void UQuestManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    // if (QuestSave)
-    // {
-    //     TArray<FQuestStruct> questStructs;
-
-    //     for (UQuest* quest : Quests)
-    //     {
-    //         questStructs.Add(quest->GetQuestStruct());
-    //     }
-
-    //     QuestSave->SaveQuestManager(questStructs);
-
-    //     UE_LOG(LogTemp, Display, TEXT("QuestManager saved"));
-    // }
-
     Super::EndPlay(EndPlayReason);
 }
 
