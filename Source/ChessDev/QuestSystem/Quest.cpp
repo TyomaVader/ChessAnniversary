@@ -14,6 +14,7 @@ void UQuest::Init(const FQuestStruct& QuestStruct, const TArray<UTrigger*>& Trig
     QuestName = QuestStruct.QuestName;
     QuestDescription = QuestStruct.QuestDescription;
     Progress = QuestStruct.Progress;
+    ProgressTotal = QuestStruct.ProgressTotal;
 
     for (const FQuestStepStruct& Step : QuestStruct.QuestSteps)
     {

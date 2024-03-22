@@ -31,6 +31,9 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     int Progress;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    int ProgressTotal;
+
     UFUNCTION(BlueprintCallable)
     void Init(const FQuestStruct& QuestStruct, const TArray<UTrigger*>& Triggers);
 

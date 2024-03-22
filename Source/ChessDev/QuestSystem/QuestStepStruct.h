@@ -14,7 +14,7 @@ struct FQuestStepStruct : public FTableRowBase
     FString StepDescription;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int StepProgress;
+    int StepProgress = 0;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int StepProgressTotal;
