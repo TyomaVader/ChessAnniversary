@@ -8,6 +8,10 @@
 #include "QuestStruct.h"
 #include "Quest.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestProgressUpdated, UQuest*, Quest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestStepProgressUpdated, UQuestStep*, Step);
+
 /**
  * 
  */
@@ -39,4 +43,13 @@ public:
 
     UFUNCTION(BlueprintCallable)
     FQuestStruct GetQuestStruct() const;
+
+    UFUNCTION(BlueprintCallable)
+    void UpdateProgress(UQuestStep* Step);
+
+    UPROPERTY(BlueprintAssignable, Category = "Quest")
+    FOnQuestProgressUpdated OnQuestProgressUpdated;
+
+    UPROPERTY(BlueprintAssignable, Category = "Quest")
+    FOnQuestStepProgressUpdated OnQuestStepProgressUpdated;
 };

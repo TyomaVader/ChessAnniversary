@@ -35,7 +35,6 @@ TArray<uint8> UQuestManager::Save()
 
         QuestJsonObject->SetStringField("name", Quest->QuestName);
         QuestJsonObject->SetStringField("description", Quest->QuestDescription);
-        QuestJsonObject->SetNumberField("progressTotal", Quest->ProgressTotal);
         QuestJsonObject->SetNumberField("progress", Quest->Progress);
 
         TArray<TSharedPtr<FJsonValue>> JsonQuestStepsArray;
@@ -145,7 +144,6 @@ void UQuestManager::Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Tri
 
         QuestStruct.QuestName = QuestJsonObject->GetStringField("name");
         QuestStruct.QuestDescription = QuestJsonObject->GetStringField("description");
-        QuestStruct.ProgressTotal = QuestJsonObject->GetIntegerField("progressTotal");
 
         if (bIsPlayerStorage)
         {
@@ -194,5 +192,37 @@ void UQuestManager::AddQuest(const FQuestStruct NewQuest, const TArray<UTrigger*
     UQuest* quest = NewObject<UQuest>();
     quest->Init(NewQuest, Triggers);
 
+    quest->OnQuestProgressUpdated.AddDynamic(this, &UQuestManager::QuestProgressUpdateNotify);
+    quest->OnQuestStepProgressUpdated.AddDynamic(this, &UQuestManager::QuestStepProgressUpdateNotify);
+
     Quests.Add(quest);
+}
+
+void UQuestManager::QuestProgressUpdateNotify(UQuest* Quest)
+{
+    OnQuestNotification.Broadcast(Quest->QuestName, Quest->Progress, Quest->ProgressTotal);
+
+    if (Quest->Progress >= Quest->ProgressTotal)
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, FString::Printf(TEXT("Quest %s completed!"), *Quest->QuestName));
+        }
+
+        UE_LOG(LogTemp, Display, TEXT("Quest %s completed!"), *Quest->QuestName);
+
+        Quest->OnQuestProgressUpdated.RemoveDynamic(this, &UQuestManager::QuestProgressUpdateNotify);
+    }
+}
+
+void UQuestManager::QuestStepProgressUpdateNotify(UQuestStep* Step)
+{
+    if (GEngine)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, FString::Printf(TEXT("QuestStep %s progress updated. Progress: %d"), *Step->StepDescription, Step->StepProgress));
+    }
+
+    UE_LOG(LogTemp, Display, TEXT("QuestStep %s progress updated. Progress: %d"), *Step->StepDescription, Step->StepProgress);
+
+    OnQuestNotification.Broadcast(Step->StepDescription, Step->StepProgress, Step->StepProgressTotal);
 }

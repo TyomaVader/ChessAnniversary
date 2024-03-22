@@ -25,7 +25,4 @@ struct FQuestStruct : public FTableRowBase
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int Progress = 0;
-
-    UPROPERTY(BlueprintReadOnly)
-    int ProgressTotal;
 };

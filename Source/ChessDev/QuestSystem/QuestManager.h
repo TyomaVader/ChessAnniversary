@@ -14,6 +14,9 @@
 #include "../GameInstanceBase.h"
 #include "QuestManager.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnQuestNotification, FString, Name, int, Progress, int, ProgressTotal);
+
 /**
  * QuestManager is a component that manages the quests in the game.
 */
@@ -51,6 +54,13 @@ public:
     UFUNCTION(BlueprintCallable)
     void Load(const TArray<uint8>& Data, const TArray<UTrigger*>& Triggers, bool bIsPlayerStorage);
 
+
+    UFUNCTION(BlueprintCallable)
+    void QuestProgressUpdateNotify(UQuest* Quest);
+
+    UFUNCTION(BlueprintCallable)
+    void QuestStepProgressUpdateNotify(UQuestStep* Step);
+
 protected:
     // Called when the game starts
     virtual void BeginPlay() override;
@@ -60,6 +70,9 @@ protected:
 public:
     UPROPERTY(BlueprintReadOnly, Category = "QuestSystem")
     TArray<UQuest*> Quests;
+
+    UPROPERTY(BlueprintAssignable, Category = "QuestSystem")
+    FOnQuestNotification OnQuestNotification;
 
 private:
     UPROPERTY()

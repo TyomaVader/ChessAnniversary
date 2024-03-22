@@ -10,6 +10,7 @@ void UQuestStep::Init(const FQuestStepStruct& StepStruct, const TArray<UTrigger*
 {
     StepDescription = StepStruct.StepDescription;
     StepProgress = StepStruct.StepProgress;
+    StepProgressTotal = StepStruct.StepProgressTotal;
     StepTriggerId = StepStruct.StepTriggerId;
 
     if (IsValid(Triggers[StepTriggerId]))
@@ -58,4 +59,6 @@ void UQuestStep::UpdateProgress()
     {
         GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, FString::Printf(TEXT("QuestStep progress updated. Progress: %d"), StepProgress));
     }
+
+    OnStepProgressUpdated.Broadcast(this);
 }

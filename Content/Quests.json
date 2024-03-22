@@ -3,13 +3,12 @@
 		{
 			"name": "TestName",
 			"description": "TestDescription",
-			"progressTotal": 10,
-			"progress": 0,
+			"progress": 1,
 			"questSteps": [
 				{
 					"description": "TestDescription",
-					"progressTotal": 0,
-					"progress": 6,
+					"progressTotal": 2,
+					"progress": 5,
 					"triggerId": 0
 				}
 			]

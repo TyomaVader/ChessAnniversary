@@ -6,6 +6,8 @@
 #include "Trigger.h"
 #include "QuestStep.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStepProgressUpdated, UQuestStep*, Step);
+
 UCLASS(BlueprintType)
 class UQuestStep : public UObject
 {
@@ -40,4 +42,7 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void UpdateProgress();
+
+    UPROPERTY(BlueprintAssignable, Category = "QuestStep")
+    FOnStepProgressUpdated OnStepProgressUpdated;
 };
