@@ -23,26 +23,6 @@
 			]
 		},
 		{
-			"Name": "EOSShared",
-			"Enabled": true
-		},
-		{
-			"Name": "OnlineServicesEOS",
-			"Enabled": true
-		},
-		{
-			"Name": "OnlineServicesEOSGS",
-			"Enabled": true
-		},
-		{
-			"Name": "OnlineSubsystemEOS",
-			"Enabled": true
-		},
-		{
-			"Name": "SocketSubsystemEOS",
-			"Enabled": true
-		},
-		{
 			"Name": "AdvancedSessions",
 			"Enabled": false
 		},

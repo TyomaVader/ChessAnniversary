@@ -1,7 +1,18 @@
 #include "bitboards.h"
 
+/**
+ * @namespace KnightMasks
+ * @brief Contains functions and constants related to knight masks in chess.
+ */
 namespace KnightMasks
 {
+    /**
+     * Calculates the absolute difference between two uint8_t values.
+     *
+     * @param left The left operand.
+     * @param right The right operand.
+     * @return The absolute difference between the two values.
+     */
     static consteval uint8_t absSubtract(uint8_t left, uint8_t right)
     {
         if (left >= right)
@@ -11,6 +22,11 @@ namespace KnightMasks
         return right - left;
     }
 
+    /**
+     * Calculates the knight masks for each square on the chessboard.
+     * 
+     * @return An array of Bitboards representing the knight masks for each square.
+     */
     static consteval array<Bitboard, 64> calculateMasks()
     {
         array<Bitboard, 64> masks{};
@@ -42,5 +58,12 @@ namespace KnightMasks
         return masks;
     }
 
+    /**
+     * @brief Array of bitboard masks for knight moves.
+     *
+     * This array stores the pre-calculated bitboard masks for all possible knight moves on a chessboard.
+     * Each element in the array represents a mask for a specific square on the chessboard.
+     * The masks are used to efficiently determine the valid knight moves for a given position.
+     */
     static constexpr array<Bitboard, 64> Masks = KnightMasks::calculateMasks();
 }

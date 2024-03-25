@@ -2,6 +2,8 @@
 #include "QuestStruct.h"
 #include "ReadWriteJson.generated.h"
 
+#pragma once
+
 class FJsonObject;
 
 UCLASS()
