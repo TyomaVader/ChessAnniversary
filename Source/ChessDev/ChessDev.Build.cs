@@ -9,16 +9,59 @@ public class ChessDev : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		CppStandard = CppStandardVersion.Latest;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "OnlineSubsystemEOS", "OnlineSubsystemUtils" });
+		PublicDependencyModuleNames.AddRange(
+			new string[] { 
+				"Core",
+				"CoreUObject",
+				"Engine",
+				"InputCore",
+				// "OnlineSubsystemEOS",
+				// "OnlineSubsystemUtils",
+				"CommonLoadingScreen",
+				"Json",
+				"JsonUtilities"
+			}
+		);
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+		PublicIncludePaths.AddRange(
+			new string[] { 
+				"ChessDev"
+			}
+		);
 
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+		PrivateIncludePaths.AddRange(
+			new string[] {
+			}
+		);
+
+		PrivateDependencyModuleNames.AddRange(
+			new string[] {
+				"InputCore",
+				"RenderCore",
+				"DeveloperSettings",
+				"EnhancedInput",
+				"NetCore",
+				"RHI",
+				"Gauntlet",
+				"UMG",
+				"CommonUI",
+				"CommonInput",
+				"GameSettings",
+				"CommonGame",
+				"CommonUser",
+				"GameSubtitles",
+				"GameplayMessageRuntime",
+				"AudioMixer",
+				"UIExtension",
+				"ClientPilot",
+				"AudioModulation",
+				"EngineSettings",
+				"Slate",
+				"SlateCore"
+			}
+		);
 		
 		// Uncomment if you are using online features
 		PrivateDependencyModuleNames.Add("OnlineSubsystem");
-
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
 	}
 }

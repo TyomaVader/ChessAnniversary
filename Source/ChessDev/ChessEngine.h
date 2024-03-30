@@ -29,7 +29,7 @@ public:
 	 * @param blackShortCastling The black short castling ability.
 	 * @param moveCtr The move counter.
 	 * 
-	 * @return The new board position.
+	 * @return void
 	*/
 	UFUNCTION(BlueprintCallable, Category = "ChessEngine")
 	void setBoardPosition(const FString& shortFen, uint8 enPassant, bool whiteLongCastling, bool whiteShortCastling, bool blackLongCastling, bool blackShortCastling, float moveCtr);
@@ -37,10 +37,10 @@ public:
 	/**
 	 * @brief Checks if the game is finished.
 	 * 
-	 * @return True if the game is finished, false otherwise.
+	 * @return 1 if white won, 2 if black won, 3 if it's a draw, 0 if game isn't finished yet.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "ChessEngine")
-	bool isGameFinished() const;
+	int isGameFinished() const;
 
 	/**
 	 * @brief Checks if the move is legal and makes it if it is.
@@ -49,11 +49,21 @@ public:
 	 * @param to The square to which the piece is moved.
 	 * @param side The side that makes the move. (0 - white, 1 - black)
 	 * 
-	 * @return True if the move is legal and was made, false otherwise.
+	 * @retval True The move is legal and was made.
+	 * @retval False The move is illegal.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "ChessEngine")
 	bool makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece);
 
+	/**
+	 * @brief AI chooses the best move and makes it.
+	 * 
+	 * @param from Variable to which the chosen move starting square is assigned.
+	 * @param to Variable to which the chosen move ending square is assigned.
+	 * @param promotionPiece Variable to which the chosen promotion piece is assigned, if the move is a promotion.
+	 * 
+	 * @return void
+	*/
 	UFUNCTION(BlueprintCallable, Category = "ChessEngine")
 	void makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece);
 
@@ -97,5 +107,4 @@ protected:
 	uint8_t opponentSide;
 
 	ChessMove playerMove;
-
 };

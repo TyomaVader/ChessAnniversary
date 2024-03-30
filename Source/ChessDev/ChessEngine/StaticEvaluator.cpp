@@ -152,7 +152,7 @@ int32_t StaticEvaluator::pawnStructureDoublePawn(Pieces pieces)
 {
     int32_t doublePawn = 0;
 
-    int32_t double_pawn_ctr = 0;
+    int32_t doublePawnCtr = 0;
 
     uint8_t whitePawns;
     uint8_t blackPawns;
@@ -162,11 +162,11 @@ int32_t StaticEvaluator::pawnStructureDoublePawn(Pieces pieces)
         whitePawns = countOnes(pieces.pieceBitboards[Pieces::White][Pieces::Pawn] & BitboardColumns::Columns[x]);
         blackPawns = countOnes(pieces.pieceBitboards[Pieces::Black][Pieces::Pawn] & BitboardColumns::Columns[x]);
 
-        double_pawn_ctr = double_pawn_ctr + std::max(0, whitePawns - 1);
-        double_pawn_ctr = double_pawn_ctr - std::max(0, blackPawns - 1);
+        doublePawnCtr = doublePawnCtr + std::max(0, whitePawns - 1);
+        doublePawnCtr = doublePawnCtr - std::max(0, blackPawns - 1);
     }
 
-    doublePawn = doublePawn + StaticEvaluator::PawnStructure::DoublePawn * double_pawn_ctr;
+    doublePawn = doublePawn + StaticEvaluator::PawnStructure::DoublePawn * doublePawnCtr;
 
     return doublePawn;
 }
@@ -175,15 +175,15 @@ int32_t StaticEvaluator::pawnStructureConnectedPawn(Pieces pieces)
 {
     int32_t connectedPawn = 0;
 
-    int32_t connected_pawn_ctr = 0;
+    int32_t connectedPawnCtr = 0;
 
     Bitboard white_captures = PsLegalMoveMaskGen::generatePawnLeftCapturesMask(pieces, Pieces::White, true) | PsLegalMoveMaskGen::generatePawnRightCapturesMask(pieces, Pieces::White, true);
     Bitboard black_captures = PsLegalMoveMaskGen::generatePawnLeftCapturesMask(pieces, Pieces::Black, true) | PsLegalMoveMaskGen::generatePawnRightCapturesMask(pieces, Pieces::Black, true);
 
-    connected_pawn_ctr = connected_pawn_ctr + countOnes(white_captures & pieces.pieceBitboards[Pieces::White][Pieces::Pawn]);
-    connected_pawn_ctr = connected_pawn_ctr - countOnes(black_captures & pieces.pieceBitboards[Pieces::Black][Pieces::Pawn]);
+    connectedPawnCtr = connectedPawnCtr + countOnes(white_captures & pieces.pieceBitboards[Pieces::White][Pieces::Pawn]);
+    connectedPawnCtr = connectedPawnCtr - countOnes(black_captures & pieces.pieceBitboards[Pieces::Black][Pieces::Pawn]);
 
-    connectedPawn = connectedPawn + StaticEvaluator::PawnStructure::ConnectedPawn * connected_pawn_ctr;
+    connectedPawn = connectedPawn + StaticEvaluator::PawnStructure::ConnectedPawn * connectedPawnCtr;
 
     return connectedPawn;
 }

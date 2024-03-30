@@ -38,14 +38,24 @@ void AChessEngine::setBoardPosition(const FString& shortFen, uint8 enPassant, bo
 	);
 }
 
-bool AChessEngine::isGameFinished() const
+int AChessEngine::isGameFinished() const
 {
-	if (this->whiteVictory() || this->blackVictory() || this->draw())
+	if (this->whiteVictory())
 	{
-		return true;
+		return 1;
+	} 
+	else if (this->blackVictory())
+	{
+		return 2;
 	}
-
-	return false;
+    else if (this->draw())
+    {
+        return 3;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 bool AChessEngine::whiteVictory() const
@@ -59,6 +69,8 @@ bool AChessEngine::whiteVictory() const
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("White won!"));
 		}
+
+		UE_LOG(LogTemp, Display, TEXT("White won"))
     }
 
     return (blackHaventGotMoves && blackInCheck);
@@ -75,6 +87,8 @@ bool AChessEngine::blackVictory() const
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Black won!"));
 		}
+
+		UE_LOG(LogTemp, Display, TEXT("Black won"));
 	}
 
 	return (whiteHaventGotMoves && whiteInCheck);
@@ -101,6 +115,8 @@ bool AChessEngine::draw() const
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] White haven't got moves."));
 		}
 
+		UE_LOG(LogTemp, Display, TEXT("[DRAW] White haven't got moves."));
+
 		return true;
 	}
 
@@ -110,6 +126,8 @@ bool AChessEngine::draw() const
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Black haven't got moves."));
 		}
+
+		UE_LOG(LogTemp, Display, TEXT("[DRAW] Black haven't got moves."));
 
 		return true;
 	}
@@ -121,6 +139,8 @@ bool AChessEngine::draw() const
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Fifty moves rule."));
 		}
 
+		UE_LOG(LogTemp, Display, TEXT("[DRAW] Fifty moves rule."));
+
 		return true;
 	}
 
@@ -130,6 +150,8 @@ bool AChessEngine::draw() const
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Three moves rule."));
 		}
+
+		UE_LOG(LogTemp, Display, TEXT("[DRAW] Three moves rule."));
 
 		return true;
 	}
@@ -201,6 +223,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 					{
 						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Invalid promotion piece!"));
 					}
+
+					UE_LOG(LogTemp, Warning, TEXT("[ERROR] Invalid promotion piece!"));
 					
 					continue;
 				break;
@@ -216,6 +240,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Illegal move!"));
 		}
+
+		UE_LOG(LogTemp, Warning, TEXT("[ERROR] Illegal move!"));
 		
 		return false;
 	}
@@ -232,6 +258,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
 			}
 
+			UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
+
 			break;
 
 		case 1:
@@ -239,6 +267,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
 			}
+
+			UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
 
 			break;
 
@@ -248,6 +278,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
 			}
 
+			UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
+
 			break;
 
 		case 3:
@@ -255,6 +287,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
 			}
+
+			UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
 
 			break;
 
@@ -264,6 +298,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
 			}
 
+			UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
+
 			break;
 
 		default:
@@ -271,6 +307,8 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
 			}
+
+			UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
 
 			break;
 		}
@@ -295,6 +333,8 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
 			}
 
+			UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
+
 			break;
 
 		case 1:
@@ -302,6 +342,8 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
 			}
+
+			UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
 
 			break;
 
@@ -311,6 +353,8 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
 			}
 
+			UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
+
 			break;
 
 		case 3:
@@ -318,6 +362,9 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
 			}
+
+			UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
+
 
 			break;
 
@@ -327,6 +374,8 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
 			}
 
+			UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
+
 			break;
 
 		default:
@@ -334,6 +383,8 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
 			}
+
+			UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
 
 			break;
 		}
