@@ -1,6 +1,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "ReadWriteFile.generated.h"
 
+#pragma once
+
 UCLASS()
 class UReadWriteFile : public UBlueprintFunctionLibrary
 {

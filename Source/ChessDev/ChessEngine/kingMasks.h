@@ -1,7 +1,17 @@
 #include "bitboards.h"
 
+/**
+ * @namespace KingMasks
+ * @brief Contains functions and constants related to generating masks for the king's movement.
+ */
 namespace KingMasks
 {
+    /**
+     * @brief Calculates the absolute difference between two uint8_t values.
+     * @param left The left operand.
+     * @param right The right operand.
+     * @return The absolute difference between the two operands.
+     */
     static consteval uint8_t absSubtract(uint8_t left, uint8_t right)
     {
         if (left >= right)
@@ -12,6 +22,10 @@ namespace KingMasks
         return right - left;
     }
 
+    /**
+     * @brief Calculates the masks for the king's movement.
+     * @return An array of Bitboard masks representing the possible king moves for each square on the chessboard.
+     */
     static consteval array<Bitboard, 64> calculateMasks()
     {
         array<Bitboard, 64> masks{};
@@ -43,5 +57,8 @@ namespace KingMasks
         return masks;
     }
 
+    /**
+     * @brief Array of Bitboard masks representing the possible king moves for each square on the chessboard.
+     */
     static constexpr array<Bitboard, 64> Masks = KingMasks::calculateMasks();
 }

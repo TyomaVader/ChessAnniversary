@@ -15,8 +15,8 @@ public class ChessDev : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"InputCore",
-				"OnlineSubsystemEOS",
-				"OnlineSubsystemUtils",
+				// "OnlineSubsystemEOS",
+				// "OnlineSubsystemUtils",
 				"CommonLoadingScreen",
 				"Json",
 				"JsonUtilities"

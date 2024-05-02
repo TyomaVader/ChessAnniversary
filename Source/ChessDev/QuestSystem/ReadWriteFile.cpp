@@ -6,7 +6,7 @@ FString UReadWriteFile::ReadStringFromFile(FString FileName, bool& bOutSuccess)
     if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FileName))
     {
         bOutSuccess = false;
-        UE_LOG(LogTemp, Error, TEXT("[ERROR] File does not exist"));
+        UE_LOG(LogTemp, Error, TEXT("[ERROR] File does not exist."));
         return "";
     }
 
@@ -16,12 +16,12 @@ FString UReadWriteFile::ReadStringFromFile(FString FileName, bool& bOutSuccess)
     if(!FFileHelper::LoadFileToString(RetString, *FileName))
     {
         bOutSuccess = false;
-        UE_LOG(LogTemp, Error, TEXT("[ERROR] Failed to read file. Maybe not file"));
+        UE_LOG(LogTemp, Error, TEXT("[ERROR] Failed to read file."));
         return "";
     }
 
     bOutSuccess = true;
-    UE_LOG(LogTemp, Display, TEXT("[SUCCESS] File read successfully"));
+    UE_LOG(LogTemp, Display, TEXT("[SUCCESS] File read successfully."));
     return RetString;
 }
 
@@ -31,10 +31,10 @@ void UReadWriteFile::WriteStringToFile(FString FileName, FString StringToWrite, 
     if(!FFileHelper::SaveStringToFile(StringToWrite, *FileName))
     {
         bOutSuccess = false;
-        UE_LOG(LogTemp, Error, TEXT("[ERROR] Failed to write to file"));
+        UE_LOG(LogTemp, Error, TEXT("[ERROR] Failed to write to file."));
         return;
     }
 
     bOutSuccess = true;
-    UE_LOG(LogTemp, Display, TEXT("[SUCCESS] File written successfully"));
+    UE_LOG(LogTemp, Display, TEXT("[SUCCESS] File written successfully."));
 }

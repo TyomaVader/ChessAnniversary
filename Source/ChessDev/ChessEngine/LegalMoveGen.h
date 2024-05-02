@@ -12,7 +12,16 @@
 #include "PsLegalMoveMaskGen.h"
 
 /**
- * 
+ * @class LegalMoveGen
+ * @brief Generates legal moves for a given chess position.
+ *
+ * The LegalMoveGen class provides static methods to generate legal moves for different chess pieces
+ * (pawn, knight, bishop, rook, queen, king) and card moves (special moves like castling and en passant).
+ * It also provides methods to generate moves for royal pieces (king and queen) and generate moves for
+ * a specific side (white or black).
+ *
+ * The generated moves are stored in a MoveList object, which can be used to iterate over the moves
+ * and perform further operations.
  */
 class CHESSDEV_API LegalMoveGen
 {
