@@ -1,14 +1,15 @@
-﻿//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 
 #include "EIK_JoinSession_AsyncFunction.h"
 #include "OnlineSubsystemUtils.h"
 #include "Kismet/GameplayStatics.h"
 
-UEIK_JoinSession_AsyncFunction* UEIK_JoinSession_AsyncFunction::JoinEIKSessions(UObject* WorldContextObject, FSessionFindStruct SessionToJoin)
+UEIK_JoinSession_AsyncFunction* UEIK_JoinSession_AsyncFunction::JoinEIKSessions(UObject* WorldContextObject, FName SessionName, FSessionFindStruct SessionToJoin)
 {
 	UEIK_JoinSession_AsyncFunction* Ueik_JoinSessionObject = NewObject<UEIK_JoinSession_AsyncFunction>();
 	Ueik_JoinSessionObject->Var_SessionToJoin = SessionToJoin;
+	Ueik_JoinSessionObject->Var_SessionName = SessionName;
 	Ueik_JoinSessionObject->Var_WorldContextObject = WorldContextObject;
 	return Ueik_JoinSessionObject;
 }
@@ -27,7 +28,7 @@ void UEIK_JoinSession_AsyncFunction::JoinSession()
 		if(const IOnlineSessionPtr SessionPtrRef = SubsystemRef->GetSessionInterface())
 		{
  			SessionPtrRef->OnJoinSessionCompleteDelegates.AddUObject(this, &UEIK_JoinSession_AsyncFunction::OnJoinSessionCompleted);
-			SessionPtrRef->JoinSession(0, NAME_GameSession,Var_SessionToJoin.SessionResult.OnlineResult);
+			SessionPtrRef->JoinSession(0, Var_SessionName,Var_SessionToJoin.SessionResult.OnlineResult);
 		}
 		else
 		{
@@ -38,6 +39,7 @@ void UEIK_JoinSession_AsyncFunction::JoinSession()
 			OnFail.Broadcast(EEIKJoinResult::UnknownError, FString());
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+			MarkAsGarbage();
 		}
 	}
 	else
@@ -49,6 +51,7 @@ void UEIK_JoinSession_AsyncFunction::JoinSession()
 		OnFail.Broadcast(EEIKJoinResult::UnknownError, FString());
 		bDelegateCalled = true;
 		SetReadyToDestroy();
+		MarkAsGarbage();
 	}
 }
 void UEIK_JoinSession_AsyncFunction::OnJoinSessionCompleted(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
@@ -87,6 +90,7 @@ void UEIK_JoinSession_AsyncFunction::OnJoinSessionCompleted(FName SessionName, E
 						OnSuccess.Broadcast(EEIKJoinResult::Success, JoinAddress);
 						bDelegateCalled = true;
 						SetReadyToDestroy();
+MarkAsGarbage();
 						return;
 					}
 					else
@@ -95,6 +99,7 @@ void UEIK_JoinSession_AsyncFunction::OnJoinSessionCompleted(FName SessionName, E
 						OnFail.Broadcast(EEIKJoinResult::CouldNotRetrieveAddress, FString());
 						bDelegateCalled = true;
 						SetReadyToDestroy();
+MarkAsGarbage();
 						return;
 					}
 				}
@@ -105,6 +110,7 @@ void UEIK_JoinSession_AsyncFunction::OnJoinSessionCompleted(FName SessionName, E
 			OnFail.Broadcast(EEIKJoinResult::UnknownError, FString());
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+MarkAsGarbage();
 			return;
 		}
 	}
@@ -128,6 +134,7 @@ void UEIK_JoinSession_AsyncFunction::OnJoinSessionCompleted(FName SessionName, E
 				OnFail.Broadcast(EEIKJoinResult::UnknownError, FString());
 		}
 		SetReadyToDestroy();
+MarkAsGarbage();
 		bDelegateCalled = true;
 	}
 }

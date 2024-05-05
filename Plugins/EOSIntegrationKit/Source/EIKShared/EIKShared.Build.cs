@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 using System;
 using System.IO;
@@ -8,6 +8,7 @@ public class EIKShared : ModuleRules
 {
 	public EIKShared(ReadOnlyTargetRules Target) : base(Target)
 	{
+		PublicDependencyModuleNames.AddRange(new string[] { "EIKSDK" });
 		Type = ModuleType.CPlusPlus;
 
 		PrivateDependencyModuleNames.AddRange(

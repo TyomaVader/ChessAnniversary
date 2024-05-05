@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "EIKCommands.h"
 
@@ -6,7 +6,7 @@
 
 void FEIKCommands::RegisterCommands()
 {
-	UI_COMMAND(PluginAction, "EIK", "Execute EIK action", EUserInterfaceActionType::Button, FInputChord());
+	UI_COMMAND(PluginAction, "EIK", "Open Epic DevPortal", EUserInterfaceActionType::Button, FInputChord());
 }
 
 #undef LOCTEXT_NAMESPACE

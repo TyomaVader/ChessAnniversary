@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "OnlineSubsystemEOS.h"
 #include "OnlineSubsystemEOSPrivate.h"
@@ -318,6 +318,11 @@ bool FOnlineSubsystemEOS::Init()
 	{
 		UE_LOG_ONLINE(Error, TEXT("FOnlineSubsystemEOS: failed to get Sanctions Handle"));
 	}
+	ReportsHandle = EOS_Platform_GetReportsInterface(*EOSPlatformHandle);
+	if (ReportsHandle == nullptr)
+	{
+		UE_LOG_ONLINE(Error, TEXT("FOnlineSubsystemEOS: failed to get Reports Handle"));
+	}
 	AntiCheatServerHandle = EOS_Platform_GetAntiCheatServerInterface(*EOSPlatformHandle);
 	if (AntiCheatServerHandle == nullptr)
 	{
@@ -479,7 +484,7 @@ bool FOnlineSubsystemEOS::Shutdown()
 	for (TPair<FUniqueNetIdRef, FOnlineSubsystemEOSVoiceChatUserWrapperRef>& Pair : LocalVoiceChatUsers)
 	{
 		FOnlineSubsystemEOSVoiceChatUserWrapperRef& VoiceChatUserWrapper = Pair.Value;
-		VoiceChatInterface->ReleaseUser(&VoiceChatUserWrapper->VoiceChatUser);
+		//VoiceChatInterface->ReleaseUser(&VoiceChatUserWrapper->VoiceChatUser);
 	}
 	LocalVoiceChatUsers.Reset();
 	VoiceChatInterface = nullptr;

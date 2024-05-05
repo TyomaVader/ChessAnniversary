@@ -1,9 +1,9 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "EOSVoiceChatUser.h"
-
+#include "UObject/UObjectIterator.h"
 #include "EIKVoiceChat/Subsystem/EIK_Voice_Subsystem.h"
-
+#include "Engine.h"
 #if WITH_EOS_RTC
 #include "HAL/IConsoleManager.h"
 #include "Stats/Stats.h"
@@ -637,7 +637,7 @@ void FEOSVoiceChatUser::LeaveChannel(const FString& ChannelName, const FOnVoiceC
 		}
 		else if (ChannelSession.IsLobbySession())
 		{
-			EOSVOICECHATUSER_LOG(Error, TEXT("LeaveChannel ChannelName:%s lobby rooms can only be removed with RemoveLobbyRoom."));
+			UE_LOG(LogEOSVoiceChat, Error, TEXT("LeaveChannel ChannelName:%s lobby rooms can only be removed with RemoveLobbyRoom."), *ChannelName);
 			Result = VoiceChat::Errors::NotPermitted();
 		}
 	}
@@ -1471,7 +1471,7 @@ void FEOSVoiceChatUser::BindChannelCallbacks(FChannelSession& ChannelSession)
 		static_assert(EOS_RTCAUDIO_ADDNOTIFYAUDIOBEFORERENDER_API_LATEST == 1, "EOS_RTC_AddNotifyAudioBeforeRenderOptions updated, check new fields");
 		AudioBeforeRenderOptions.LocalUserId = LoginSession.LocalUserProductUserId;
 		AudioBeforeRenderOptions.RoomName = Utf8RoomName.Get();
-		AudioBeforeRenderOptions.bUnmixedAudio = false;
+		AudioBeforeRenderOptions.bUnmixedAudio = true;
 		ChannelSession.OnAudioBeforeRenderNotificationId = EOS_RTCAudio_AddNotifyAudioBeforeRender(EOS_RTC_GetAudioInterface(GetRtcInterface()), &AudioBeforeRenderOptions, this, &FEOSVoiceChatUser::OnChannelAudioBeforeRenderStatic);
 		if (ChannelSession.OnAudioBeforeRenderNotificationId == EOS_INVALID_NOTIFICATIONID)
 		{
@@ -2027,7 +2027,7 @@ void FEOSVoiceChatUser::OnUpdateSendingAudio(const EOS_RTCAudio_UpdateSendingCal
 				else
 				{
 					// Not a warning as the first call to UpdateSending is before JoinRoom, so before the local participant is added...
-					EOSVOICECHATUSER_LOG(Verbose, TEXT("OnUpdateSending ChannelName=[%s] PlayerName=[%s] not found"), *ChannelName);
+					EOSVOICECHATUSER_LOG(Verbose, TEXT("OnUpdateSending ChannelName=[%s] PlayerName=[%s] not found"), *ChannelName, *ChannelSession->PlayerName);
 				}
 			}
 		}
@@ -2077,8 +2077,19 @@ void FEOSVoiceChatUser::OnChannelDisconnected(const EOS_RTC_DisconnectedCallback
 		else
 		{
 			ChannelSession->JoinState = EChannelJoinState::NotJoined;
-					
+
+			TArray<UEIK_Voice_Subsystem*> Objects;
+			for (TObjectIterator<UEIK_Voice_Subsystem> Itr; Itr; ++Itr)
+			{
+				Objects.Add(*Itr);
+			}
+			if(Objects[0])
+			{
+				Objects[0]->OnChannelExited.Broadcast(ChannelName, EOS_EResult_ToString(CallbackInfo->ResultCode));
+			}
+			
 			OnVoiceChatChannelExitedDelegate.Broadcast(ChannelName, Result);
+			EOS_EResult_ToString(CallbackInfo->ResultCode);
 
 			RemoveChannelSession(ChannelName);
 		}
@@ -2184,7 +2195,15 @@ void FEOSVoiceChatUser::OnChannelParticipantStatusChanged(const EOS_RTC_Particip
 					FString Value(UTF8_TO_TCHAR(CallbackInfo->ParticipantMetadata[i].Value));
 					Metadata.Emplace(FVoiceChatMetadataItem{ MoveTemp(Key), MoveTemp(Value) });
 				}
-
+				TArray<UEIK_Voice_Subsystem*> Objects;
+				for (TObjectIterator<UEIK_Voice_Subsystem> Itr; Itr; ++Itr)
+				{
+					Objects.Add(*Itr);
+				}
+				if(Objects[0])
+				{
+					Objects[0]->OnPlayerAdded.Broadcast(ChannelName, PlayerName);
+				}
 				OnVoiceChatPlayerAddedDelegate.Broadcast(ChannelName, PlayerName);
 				FEIKVoiceChatDelegates::OnVoiceChatPlayerAddedMetadata.Broadcast(LoginSession.PlayerName, ChannelName, PlayerName, Metadata);
 
@@ -2205,6 +2224,15 @@ void FEOSVoiceChatUser::OnChannelParticipantStatusChanged(const EOS_RTC_Particip
 		{
 			ChannelSession->Participants.Remove(PlayerName);
 			OnVoiceChatPlayerRemovedDelegate.Broadcast(ChannelSession->ChannelName, PlayerName);
+			TArray<UEIK_Voice_Subsystem*> Objects;
+			for (TObjectIterator<UEIK_Voice_Subsystem> Itr; Itr; ++Itr)
+			{
+				Objects.Add(*Itr);
+			}
+			if(Objects[0])
+			{
+				Objects[0]->OnPlayerRemoved.Broadcast(ChannelSession->ChannelName, PlayerName);
+			}
 		}
 		else
 		{

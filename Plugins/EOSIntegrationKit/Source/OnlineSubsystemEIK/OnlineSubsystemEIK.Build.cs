@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
 using System.IO;
@@ -35,7 +35,8 @@ public class OnlineSubsystemEIK : ModuleRules
 				"Projects",
 				"Slate",
 				"SlateCore",
-				"HTTP",
+				"HTTP", 
+				"EOSIntegrationKit",
 			}
 		);
 

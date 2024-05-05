@@ -1155,7 +1155,7 @@ EOS_STRUCT(EOS_Sessions_AddNotifySessionInviteRejectedOptions, (
  * Output parameters for the EOS_Sessions_OnSessionInviteRejectedCallback function.
  */
 EOS_STRUCT(EOS_Sessions_SessionInviteRejectedCallbackInfo, (
-	/** Context that was passed into EOS_Lobby_AddNotifySessionInviteRejected */
+	/** Context that was passed into EOS_Sessions_AddNotifySessionInviteRejected */
 	void* ClientData;
 	/** The invite ID */
 	const char* InviteId;

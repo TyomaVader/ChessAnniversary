@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -141,6 +141,7 @@ public:
 	EOS_HAntiCheatClient AntiCheatClientHandle;
 	EOS_HAntiCheatServer AntiCheatServerHandle;
 	EOS_HSanctions SanctionsHandle;
+	EOS_HReports ReportsHandle;
 
 	/** Manager that handles all user interfaces */
 	FUserManagerEOSPtr UserManager;

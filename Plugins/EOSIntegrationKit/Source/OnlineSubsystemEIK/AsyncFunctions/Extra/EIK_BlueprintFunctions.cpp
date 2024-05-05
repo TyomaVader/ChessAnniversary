@@ -1,14 +1,17 @@
-﻿//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "EIK_BlueprintFunctions.h"
 
 #include "EIKSettings.h"
 #include "HttpModule.h"
+#include "OnlineSessionEOS.h"
+#include "OnlineSubsystemEOS.h"
 #include "Engine/GameInstance.h"
 #include "Containers/Array.h"
 #include "GameFramework/GameModeBase.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
+#include "Interfaces/IPluginManager.h"
 #include "Misc/Base64.h"
 #include "OnlineSubsystemEIK/AsyncFunctions/Login/EIK_Login_AsyncFunction.h"
 
@@ -58,6 +61,52 @@ FString UEIK_BlueprintFunctions::GetEpicAccountId(UObject* Context)
 	{
 		return FString();
 	}
+}
+
+FEIK_CurrentSessionInfo UEIK_BlueprintFunctions::GetCurrentSessionInfo(UObject* Context,FName SessionName)
+{
+	if(Context)
+	{
+		if(!Context->GetWorld())
+		{
+			return FEIK_CurrentSessionInfo();
+		}
+		if(const IOnlineSubsystem *SubsystemRef = IOnlineSubsystem::Get())
+		{
+			if(const IOnlineSessionPtr SessionPtrRef = SubsystemRef->GetSessionInterface())
+			{
+				FEIK_CurrentSessionInfo SessionInfo(*SessionPtrRef->GetNamedSession(SessionName));
+				return SessionInfo;
+			}
+			return FEIK_CurrentSessionInfo();
+		}
+		return FEIK_CurrentSessionInfo();
+	}
+	return FEIK_CurrentSessionInfo();
+}
+
+TArray<FName> UEIK_BlueprintFunctions::GetAllCurrentSessionNames(UObject* Context)
+{
+	if(Context)
+	{
+		if(!Context->GetWorld())
+		{
+			return TArray<FName>();
+		}
+		if(	IOnlineSubsystem* OnlineSub = IOnlineSubsystem::Get())
+		{
+			if (FOnlineSubsystemEOS* EOSRef = static_cast<FOnlineSubsystemEOS*>(OnlineSub))
+			{
+				TArray<FName> SessionNames;
+				for(auto SessionV : EOSRef->SessionInterfacePtr->Sessions)
+				{
+					SessionNames.Add(SessionV.SessionName);
+				}
+				return SessionNames;
+			}
+		}
+	}
+	return TArray<FName>();
 }
 
 FString UEIK_BlueprintFunctions::GetProductUserID(UObject* Context)
@@ -146,7 +195,7 @@ bool UEIK_BlueprintFunctions::StartSession(FName SessionName)
 	return false;
 }
 
-bool UEIK_BlueprintFunctions::RegisterPlayer(FName SessionName, FEIKUniqueNetId PlayerId, bool bWasInvited)
+bool UEIK_BlueprintFunctions::RegisterPlayer(FName SessionName,FEIKUniqueNetId PlayerId, bool bWasInvited)
 {
 	if(!PlayerId.UniqueNetId.IsValid())
 	{
@@ -199,13 +248,12 @@ bool UEIK_BlueprintFunctions::EndSession(FName SessionName)
 	}
 }
 
-bool UEIK_BlueprintFunctions::IsInSession(FName SessionName, FEIKUniqueNetId PlayerId)
+bool UEIK_BlueprintFunctions::IsInSession(FName SessionName,FEIKUniqueNetId PlayerId)
 {
 	if(const IOnlineSubsystem *SubsystemRef = IOnlineSubsystem::Get())
 	{
 		if(const IOnlineSessionPtr SessionPtrRef = SubsystemRef->GetSessionInterface())
 		{
-			UE_LOG(LogTemp, Warning, TEXT("PlayerId.UniqueNetId.IsValid() %s"), PlayerId.UniqueNetId.IsValid() ? TEXT("true") : TEXT("false"));
 			return SessionPtrRef->IsPlayerInSession(SessionName, PlayerId.UniqueNetId.ToSharedRef().Get());
 		}
 	}
@@ -319,15 +367,30 @@ ELoginTypes UEIK_BlueprintFunctions::GetActivePlatformSubsystem()
 
 FString UEIK_BlueprintFunctions::ByteArrayToString(const TArray<uint8>& DataToConvert)
 {
-	FString Result = FBase64::Encode(DataToConvert.GetData(), DataToConvert.Num());
-	return Result;
+	FString ResultString;
+
+	// Iterate through each element of the array
+	for (uint8 Element : DataToConvert)
+	{
+		// Append the character represented by the uint8 value to the result string
+		ResultString.AppendChar((TCHAR)Element);
+	}
+	return ResultString;
 }
 
 TArray<uint8> UEIK_BlueprintFunctions::StringToByteArray(const FString& DataToConvert)
 {
-	TArray<uint8> Result;
-	FBase64::Decode(DataToConvert, Result);
-	return Result;
+
+	TArray<uint8> ResultArray;
+
+	// Iterate through each character of the string
+	for (int32 Index = 0; Index < DataToConvert.Len(); Index++)
+	{
+		// Get the ASCII value of the character and add it to the array
+		uint8 CharAsUint8 = (uint8)DataToConvert[Index];
+		ResultArray.Add(CharAsUint8);
+	}
+	return ResultArray;
 }
 
 FEIKUniqueNetId UEIK_BlueprintFunctions::GetUserUniqueID(const APlayerController* PlayerController, bool& bIsValid)
@@ -372,6 +435,16 @@ FEIKUniqueNetId UEIK_BlueprintFunctions::GetUserUniqueID(const APlayerController
 FString UEIK_BlueprintFunctions::GetEOSSDKVersion()
 {
 	return EOS_GetVersion();
+}
+
+FString UEIK_BlueprintFunctions::GetEIKPluginVersion()
+{
+	const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(TEXT("EOSIntegrationKit"));
+	if(Plugin.IsValid())
+	{
+		return Plugin->GetDescriptor().VersionName;
+	}
+	return FString(TEXT("Plugin not found"));
 }
 
 bool UEIK_BlueprintFunctions::IsValidSession(FSessionFindStruct Session)

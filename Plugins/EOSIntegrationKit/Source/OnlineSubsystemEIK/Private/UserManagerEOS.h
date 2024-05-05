@@ -1,8 +1,9 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
 #include "OnlineSubsystemEOSTypes.h"
+#include "Runtime/Launch/Resources/Version.h"
 #include "Interfaces/OnlineExternalUIInterface.h"
 #include "Interfaces/OnlineFriendsInterface.h"
 #include "Interfaces/OnlinePresenceInterface.h"
@@ -268,10 +269,12 @@ public:
 	//Custom Function
 	void LoginWithDeviceID(const FOnlineAccountCredentials& AccountCredentials);
 	void CreateDeviceID(const FOnlineAccountCredentials& AccountCredentials);
+	void CreateConnectID(EOS_ContinuanceToken ContinuanceToken, const FOnlineAccountCredentials& AccountCredentials);
 	void DeleteDeviceID(const FOnlineAccountCredentials& AccountCredentials);
 	void CompleteDeviceIDLogin(int32 LocalUserNum, EOS_EpicAccountId AccountId, EOS_ProductUserId UserId);
 	void EIK_Auto_Login();
-	
+	void OpenIDLogin(const FOnlineAccountCredentials& AccountCredentials);
+	void StartConnectInterfaceLogin(const FOnlineAccountCredentials& AccountCredentials);
 
 // IOnlineIdentity Interface
 	virtual bool Login(int32 LocalUserNum, const FOnlineAccountCredentials& AccountCredentials) override;
@@ -287,14 +290,25 @@ public:
 	virtual FString GetPlayerNickname(int32 LocalUserNum) const override;
 	virtual FString GetPlayerNickname(const FUniqueNetId& UserId) const override;
 	virtual FString GetAuthToken(int32 LocalUserNum) const override;
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 4
+#else
 	virtual void GetUserPrivilege(const FUniqueNetId& UserId, EUserPrivileges::Type Privilege, const FOnGetUserPrivilegeCompleteDelegate& Delegate) override;
+#endif
 	virtual FString GetAuthType() const override;
 	virtual void RevokeAuthToken(const FUniqueNetId& LocalUserId, const FOnRevokeAuthTokenCompleteDelegate& Delegate) override;
 	virtual FPlatformUserId GetPlatformUserIdFromUniqueNetId(const FUniqueNetId& UniqueNetId) const override;
 	virtual void GetLinkedAccountAuthToken(int32 LocalUserNum, const FOnGetLinkedAccountAuthTokenCompleteDelegate& Delegate) const override;
+	virtual int32 GetLocalUserNumFromPlatformUserId(FPlatformUserId PlatformUserId) const override;
 // ~IOnlineIdentity Interface
 	ELoginStatus::Type GetLoginStatus(const FUniqueNetIdEOS& UserId) const;
-
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 4
+	void GetUserPrivilege(const FUniqueNetId& LocalUserId, EUserPrivileges::Type Privilege,
+	                      const FOnGetUserPrivilegeCompleteDelegate& Delegate,
+	                      EShowPrivilegeResolveUI ShowResolveUI) override
+	{
+		//Delegate.ExecuteIfBound(LocalUserId, Privilege, EPrivilegeResults::NoFailures);
+	}
+#endif
 // IOnlineExternalUI Interface
 	virtual bool ShowLoginUI(const int ControllerIndex, bool bShowOnlineOnly, bool bShowSkipButton, const FOnLoginUIClosedDelegate& Delegate = FOnLoginUIClosedDelegate()) override;
 	virtual bool ShowAccountCreationUI(const int ControllerIndex, const FOnAccountCreationUIClosedDelegate& Delegate = FOnAccountCreationUIClosedDelegate()) override;

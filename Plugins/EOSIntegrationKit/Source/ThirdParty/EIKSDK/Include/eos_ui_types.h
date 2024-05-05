@@ -199,7 +199,7 @@ EOS_STRUCT(EOS_UI_SetToggleFriendsButtonOptions, (
 	/**
 	 * The new button which will be used to toggle the friends overlay.
 	 * It can be any combination of buttons.
-	 * A value of EOS_UISBF_None will cause the button to revert to the default.
+	 * The default value is No Button. Set the value to EOS_UISBF_None to revert to the default.
 	 */
 	EOS_UI_EInputStateButtonFlags ButtonCombination;
 ));

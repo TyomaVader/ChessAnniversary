@@ -6,7 +6,7 @@
 		},
 		{
 			"name": "UE5",
-			"path": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+			"path": "D:\\UE\\UE_5.3"
 		}
 	],
 	"settings": {
@@ -145,13 +145,13 @@
 					"ChessDev",
 					"Win64",
 					"Debug",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -162,7 +162,7 @@
 					"ChessDev",
 					"Win64",
 					"Debug",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -171,7 +171,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -182,13 +182,13 @@
 					"ChessDev",
 					"Win64",
 					"Debug",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -199,13 +199,13 @@
 					"ChessDev",
 					"Win64",
 					"DebugGame",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -216,7 +216,7 @@
 					"ChessDev",
 					"Win64",
 					"DebugGame",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -225,7 +225,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -236,13 +236,13 @@
 					"ChessDev",
 					"Win64",
 					"DebugGame",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -253,13 +253,13 @@
 					"ChessDev",
 					"Win64",
 					"Development",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -270,7 +270,7 @@
 					"ChessDev",
 					"Win64",
 					"Development",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -279,7 +279,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -290,13 +290,13 @@
 					"ChessDev",
 					"Win64",
 					"Development",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -307,13 +307,13 @@
 					"ChessDev",
 					"Win64",
 					"Test",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -324,7 +324,7 @@
 					"ChessDev",
 					"Win64",
 					"Test",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -333,7 +333,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -344,13 +344,13 @@
 					"ChessDev",
 					"Win64",
 					"Test",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -361,13 +361,13 @@
 					"ChessDev",
 					"Win64",
 					"Shipping",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -378,7 +378,7 @@
 					"ChessDev",
 					"Win64",
 					"Shipping",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -387,7 +387,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -398,13 +398,13 @@
 					"ChessDev",
 					"Win64",
 					"Shipping",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -415,13 +415,13 @@
 					"ChessDevEditor",
 					"Win64",
 					"Debug",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -432,7 +432,7 @@
 					"ChessDevEditor",
 					"Win64",
 					"Debug",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -441,7 +441,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -452,13 +452,13 @@
 					"ChessDevEditor",
 					"Win64",
 					"Debug",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -469,13 +469,13 @@
 					"ChessDevEditor",
 					"Win64",
 					"DebugGame",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -486,7 +486,7 @@
 					"ChessDevEditor",
 					"Win64",
 					"DebugGame",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -495,7 +495,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -506,13 +506,13 @@
 					"ChessDevEditor",
 					"Win64",
 					"DebugGame",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -523,13 +523,13 @@
 					"ChessDevEditor",
 					"Win64",
 					"Development",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -540,7 +540,7 @@
 					"ChessDevEditor",
 					"Win64",
 					"Development",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -549,7 +549,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -560,13 +560,13 @@
 					"ChessDevEditor",
 					"Win64",
 					"Development",
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"cwd": "D:\\UE\\UE_5.3"
 				}
 			}
 		]
@@ -577,132 +577,132 @@
 			{
 				"name": "Launch ChessDev (Debug)",
 				"request": "launch",
-				"program": "C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+				"program": "D:\\Chess/\\ProjectChess_5.3\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
 				"preLaunchTask": "ChessDev Win64 Debug Build",
 				"args": [
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDev (DebugGame)",
 				"request": "launch",
-				"program": "C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+				"program": "D:\\Chess/\\ProjectChess_5.3\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
 				"preLaunchTask": "ChessDev Win64 DebugGame Build",
 				"args": [
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDev (Development)",
 				"request": "launch",
-				"program": "C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\Binaries\\Win64\\UnrealGame.exe",
+				"program": "D:\\Chess/\\ProjectChess_5.3\\Binaries\\Win64\\UnrealGame.exe",
 				"preLaunchTask": "ChessDev Win64 Development Build",
 				"args": [
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDev (Test)",
 				"request": "launch",
-				"program": "C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+				"program": "D:\\Chess/\\ProjectChess_5.3\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
 				"preLaunchTask": "ChessDev Win64 Test Build",
 				"args": [
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDev (Shipping)",
 				"request": "launch",
-				"program": "C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+				"program": "D:\\Chess/\\ProjectChess_5.3\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
 				"preLaunchTask": "ChessDev Win64 Shipping Build",
 				"args": [
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDevEditor (Debug)",
 				"request": "launch",
-				"program": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
+				"program": "D:\\UE\\UE_5.3\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
 				"preLaunchTask": "ChessDevEditor Win64 Debug Build",
 				"args": [
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject"
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject"
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDevEditor (DebugGame)",
 				"request": "launch",
-				"program": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
+				"program": "D:\\UE\\UE_5.3\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
 				"preLaunchTask": "ChessDevEditor Win64 DebugGame Build",
 				"args": [
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject"
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject"
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
 				"name": "Launch ChessDevEditor (Development)",
 				"request": "launch",
-				"program": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+				"program": "D:\\UE\\UE_5.3\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
 				"preLaunchTask": "ChessDevEditor Win64 Development Build",
 				"args": [
-					"C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject"
+					"D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject"
 				],
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3",
+				"cwd": "D:\\UE\\UE_5.3",
 				"stopAtEntry": false,
 				"console": "externalTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "D:\\UE\\UE_5.3\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+					"D:\\build\\++UE5\\Sync": "D:\\UE\\UE_5.3"
 				}
 			},
 			{
@@ -710,18 +710,18 @@
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "UnrealBuildTool Win64 Development Build",
-				"program": "C:\\Program Files (x86)\\Epic Games\\UE_5.3\\Engine\\Build\\BatchFiles\\RunUBT.bat",
+				"program": "D:\\UE\\UE_5.3\\Engine\\Build\\BatchFiles\\RunUBT.bat",
 				"args": [
 					"-projectfiles",
 					"-vscode",
-					"-project=C:\\Users\\User\\Documents\\Unreal Projects\\ProjectChess 5.3\\ChessDev.uproject",
+					"-project=D:\\Chess/\\ProjectChess_5.3\\ChessDev.uproject",
 					"-game",
 					"-engine",
 					"-dotnet"
 				],
 				"console": "externalTerminal",
 				"stopAtEntry": false,
-				"cwd": "C:\\Program Files (x86)\\Epic Games\\UE_5.3"
+				"cwd": "D:\\UE\\UE_5.3"
 			}
 		]
 	}

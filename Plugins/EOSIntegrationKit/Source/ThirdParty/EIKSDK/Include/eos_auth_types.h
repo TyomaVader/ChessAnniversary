@@ -33,7 +33,7 @@ EOS_ENUM(EOS_ELoginCredentialType,
 	/**
 	 * Used by standalone applications distributed outside the supported game platforms such as Epic Games Store or Steam, and on Nintendo Switch.
 	 *
-	 * Persistent Auth is used in conjuction with the EOS_LCT_AccountPortal login method for automatic login of the local user across multiple runs of the application.
+	 * Persistent Auth is used in conjunction with the EOS_LCT_AccountPortal login method for automatic login of the local user across multiple runs of the application.
 	 *
 	 * Standalone applications implement the login sequence as follows:
 	 * 1. Application calls EOS_Auth_Login with EOS_LCT_PersistentAuth, using a previously stored Epic refresh token for an automatic user login.

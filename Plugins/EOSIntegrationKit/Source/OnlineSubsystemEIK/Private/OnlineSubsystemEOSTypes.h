@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "Interfaces/OnlinePresenceInterface.h"
 #include "Interfaces/OnlineUserInterface.h"
 #include "EOSShared.h"
+#include "Runtime/Launch/Resources/Version.h"
 #include "EOSSharedTypes.h"
 #include "IPAddress.h"
 #include "OnlineSubsystem.h"
@@ -396,7 +397,11 @@ namespace OSSInternalCallback
 {
 	/** Create a callback for a non-SDK function that is tied to the lifetime of an arbitrary shared pointer. */
 	template <typename DelegateType, typename OwnerType, typename... CallbackArgs>
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >3
+	[[nodiscard]] DelegateType Create(const TSharedPtr<OwnerType, ESPMode::ThreadSafe>& InOwner,
+#else
 	UE_NODISCARD DelegateType Create(const TSharedPtr<OwnerType, ESPMode::ThreadSafe>& InOwner,
+#endif  
 		const TFunction<void(CallbackArgs...)>& InUserCallback)
 	{
 		const DelegateType& CheckOwnerThenExecute = DelegateType::CreateLambda(
@@ -611,17 +616,18 @@ protected:
 	{
 		return *this;
 	}
+	
+public:
 
-PACKAGE_SCOPE:
 	/** Constructor */
 	FOnlineSessionInfoEOS();
 
 	FOnlineSessionInfoEOS(const FOnlineSessionInfoEOS& Src)
 		: FOnlineSessionInfo(Src)
-		, HostAddr(Src.HostAddr)
 		, SessionId(Src.SessionId)
 		, SessionHandle(Src.SessionHandle)
 		, bIsFromClone(true)
+		, HostAddr(Src.HostAddr)
 	{
 	}
 
@@ -633,16 +639,17 @@ PACKAGE_SCOPE:
 	void InitLAN(FOnlineSubsystemEOS* Subsystem);
 
 	FString EOSAddress;
-	/** The ip & port that the host is listening on (valid for LAN/GameServer) */
-	TSharedPtr<class FInternetAddr> HostAddr;
+
 	/** Unique Id for this session */
 	FUniqueNetIdStringRef SessionId;
 	/** EOS session handle. Note: this needs to be released by the SDK */
 	EOS_HSessionDetails SessionHandle;
 	/** Whether we should delete this handle or not */
 	bool bIsFromClone;
-
-public:
+	
+	/** The ip & port that the host is listening on (valid for LAN/GameServer) */
+	TSharedPtr<class FInternetAddr> HostAddr;
+	
 	virtual ~FOnlineSessionInfoEOS();
 	bool operator==(const FOnlineSessionInfoEOS& Other) const
 	{

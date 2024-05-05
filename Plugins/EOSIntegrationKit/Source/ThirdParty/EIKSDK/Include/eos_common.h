@@ -321,7 +321,9 @@ EOS_ENUM(EOS_EExternalAccountType,
 	/** External account is associated with itch.io */
 	EOS_EAT_ITCHIO = 12,
 	/** External account is associated with Amazon */
-	EOS_EAT_AMAZON = 13
+	EOS_EAT_AMAZON = 13,
+	/** External account is associated with Viveport */
+	EOS_EAT_VIVEPORT = 14
 );
 
 /**
@@ -350,6 +352,7 @@ EOS_ENUM(EOS_EExternalCredentialType,
 	EOS_ECT_EPIC = 0,
 	/**
 	 * Steam Encrypted App Ticket
+	 * Note that EOS_ECT_STEAM_APP_TICKET is deprecated for use with EOS_Auth_Login. Use EOS_ECT_STEAM_SESSION_TICKET instead.
 	 *
 	 * Generated using the ISteamUser::RequestEncryptedAppTicket API of Steamworks SDK.
 	 * For ticket generation parameters, use pDataToInclude(NULL) and cbDataToInclude(0).
@@ -358,7 +361,6 @@ EOS_ENUM(EOS_EExternalCredentialType,
 	 * EOS_ByteArray_ToString can be used for this conversion.
 	 *
 	 * Supported with EOS_Connect_Login.
-	 * Note that EOS_ECT_STEAM_APP_TICKET is deprecated for use with EOS_Auth_Login. Use EOS_ECT_STEAM_SESSION_TICKET instead.
 	 *
 	 * @see EOS_ECT_STEAM_SESSION_TICKET
 	 */
@@ -541,7 +543,13 @@ EOS_ENUM(EOS_EExternalCredentialType,
 	 *
 	 * @version 1.15.1+
 	 */
-	EOS_ECT_STEAM_SESSION_TICKET = 18
+	EOS_ECT_STEAM_SESSION_TICKET = 18,
+	/**
+	 * VIVEPORT User Session Token
+	 *
+	 * Supported with EOS_Connect_Login.
+	 */
+	EOS_ECT_VIVEPORT_USER_TOKEN = 19
 );
 
 /**

@@ -1,11 +1,41 @@
 ﻿#include "EOSIntegrationKit.h"
+
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
+#include "Misc/MessageDialog.h"
+#include "Runtime/Core/Public/GenericPlatform/GenericPlatformMisc.h"
+#include "Runtime/Launch/Resources/Version.h"
 #define LOCTEXT_NAMESPACE "FEOSIntegrationKitModule"
 
 void FEOSIntegrationKitModule::StartupModule()
 {
     ConfigureOnlineSubsystemEIK();
+#if WITH_EDITOR && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 3
+    if(IPluginManager::Get().FindPlugin("OnlineSubsystemEOS") != nullptr && IPluginManager::Get().FindPlugin("OnlineSubsystemEOS")->IsEnabled())
+    {
+        const FText Message = LOCTEXT("EOSIntegrationKitError","EOS Integration Kit Error");
+        FMessageDialog::Open(EAppMsgCategory::Warning,EAppMsgType::Ok,LOCTEXT("EOS Integration Kit Error","OnlineSubsystemEOS Plugin is enabled which will not allow EOS Integration Kit to work properly. Please disable OnlineSubsystemEOS Plugin and restart the editor. The basic reasoning behind this is that the EOS SDK is already included in our plugin and you cannot include the SDK twice."));
+    }
+    else
+    {
+        if(IPluginManager::Get().FindPlugin("EOSShared")->IsEnabled() || IPluginManager::Get().FindPlugin("EOSVoiceChat")->IsEnabled() || IPluginManager::Get().FindPlugin("SocketSubsystemEOS")->IsEnabled())
+        {
+            const FText Message = LOCTEXT("EOSIntegrationKitError","EOS Integration Kit Error");
+            FMessageDialog::Open(EAppMsgCategory::Warning,EAppMsgType::Ok,LOCTEXT("EOS Integration Kit Error","One of the following plugins is enabled: EOSShared, EOSVoiceChat, SocketSubsystemEOS. Please disable these plugins and restart the editor."));
+        }
+    }
+    //Special love and respect to eelDev and Redpoint Devs but this had to be added as a warning and you know why 🙏
+    if(IPluginManager::Get().FindPlugin("EOSCore") != nullptr && IPluginManager::Get().FindPlugin("EOSCore")->IsEnabled())
+    {
+        const FText Message = LOCTEXT("EOSIntegrationKitError","EOS Integration Kit Error");
+        FMessageDialog::Open(EAppMsgCategory::Warning,EAppMsgType::Ok,LOCTEXT("EOS Integration Kit Error","EOSCore Plugin is enabled which will not allow EOS Integration Kit to work properly. Please disable EOSCore Plugin and restart the editor. The basic reasoning behind this is that the EOS SDK is already included in our plugin and you cannot include the SDK twice."));
+    }
+    if(IPluginManager::Get().FindPlugin("OnlineSubsystemRedpoint") != nullptr && IPluginManager::Get().FindPlugin("OnlineSubsystemRedpoint")->IsEnabled())
+    {
+        const FText Message = LOCTEXT("EOSIntegrationKitError","EOS Integration Kit Error");
+        FMessageDialog::Open(EAppMsgCategory::Warning,EAppMsgType::Ok,LOCTEXT("EOS Integration Kit Error","OnlineSubsystemRedpoint Plugin is enabled which will not allow EOS Integration Kit to work properly. Please disable OnlineSubsystemRedpoint Plugin and restart the editor. The basic reasoning behind this is that the EOS SDK is already included in our plugin and you cannot include the SDK twice."));
+    }
+#endif
 }
 
 void FEOSIntegrationKitModule::ConfigureOnlineSubsystemEIK() const
@@ -79,6 +109,7 @@ void FEOSIntegrationKitModule::ConfigureOnlineSubsystemEIK() const
     {
         UE_LOG(LogTemp, Error, TEXT("Failed to load DefaultEngine.ini"));
     }
+    
 }
 
 void FEOSIntegrationKitModule::ConfigureDedicatedServerConfigEIK()

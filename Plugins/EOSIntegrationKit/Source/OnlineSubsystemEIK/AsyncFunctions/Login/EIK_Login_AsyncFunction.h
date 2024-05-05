@@ -1,8 +1,10 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineError.h"
+#include "OnlineSubsystem.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 #include "Runtime/CoreOnline/Public/Online/CoreOnline.h"
 #include "EIK_Login_AsyncFunction.generated.h"
@@ -40,6 +42,7 @@ public:
 	ELoginTypes LoginMethod;
 	FString Input1;
 	FString Input2;
+	IOnlineSubsystem* AppleSubsystem;
 
 	bool bDelegateCalled = false;
 
@@ -48,15 +51,18 @@ public:
 	Documentation link: https://betide-studio.gitbook.io/eos-integration-kit/authentication/
 	For Input Parameters, please refer to the documentation link above.
 	
-	Following Methods are coming with upcoming build - Google, Apple, Discord, Oculus, OpenID
+	Following Methods are coming with upcoming build - Apple, Discord, Oculus, OpenID
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category="EOS Integration Kit || Login")
-	static UEIK_Login_AsyncFunction* LoginUsingEIK(ELoginTypes LoginMethod, FString Input1, FString Input2);
+	static UEIK_Login_AsyncFunction* LoginUsingEIK(ELoginTypes LoginMethod, FString DisplayName, FString Token);
 	
 	virtual void Activate() override;
 
 	void Login();
 
 	void LoginCallback(int32 LocalUserNum, bool bWasSuccess, const FUniqueNetId& UserId, const FString& Error);
+
+	void LoginWithAppleCallback(TSharedPtr<const FUniqueNetId> UniqueNetId, int I, const FOnlineError& OnlineError);
+	void LoginWithApple();
 	
 };

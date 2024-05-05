@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 
 #include "EIK_CreateSession_AsyncFunction.h"
@@ -32,7 +32,7 @@ void UEIK_CreateSession_AsyncFunction::CreateSession()
 				SessionCreationInfo.bAllowJoinViaPresenceFriendsOnly = false;
 				SessionCreationInfo.bAllowInvites = false;
 			}
-			SessionCreationInfo.bIsLANMatch = false;
+			SessionCreationInfo.bIsLANMatch = ExtraSettings.bIsLanMatch;
 			SessionCreationInfo.NumPublicConnections = NumberOfPublicConnections;
 			SessionCreationInfo.NumPrivateConnections = ExtraSettings.NumberOfPrivateConnections;
 			SessionCreationInfo.bUseLobbiesIfAvailable = false;
@@ -60,7 +60,7 @@ void UEIK_CreateSession_AsyncFunction::CreateSession()
 				SessionCreationInfo.Set(FName(*Settings_SingleValue.Key), Setting);
 			}
 			SessionPtrRef->OnCreateSessionCompleteDelegates.AddUObject(this, &UEIK_CreateSession_AsyncFunction::OnCreateSessionCompleted);
-			SessionPtrRef->CreateSession(0,NAME_GameSession,SessionCreationInfo);
+			SessionPtrRef->CreateSession(0,VSessionName,SessionCreationInfo);
 		}
 		else
 		{
@@ -68,6 +68,7 @@ void UEIK_CreateSession_AsyncFunction::CreateSession()
 			{
 				OnFail.Broadcast("");
 				SetReadyToDestroy();
+				MarkAsGarbage();
 				bDelegateCalled = true;
 			}
 		}
@@ -79,32 +80,32 @@ void UEIK_CreateSession_AsyncFunction::CreateSession()
 			OnFail.Broadcast("");
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+			MarkAsGarbage();
 		}
 	}
 }
 
-void UEIK_CreateSession_AsyncFunction::OnCreateSessionCompleted(FName VSessionName, bool bWasSuccessful)
+void UEIK_CreateSession_AsyncFunction::OnCreateSessionCompleted(FName SessionName, bool bWasSuccessful)
 {
 	if(bWasSuccessful)
 	{
 		if(bDelegateCalled == false)
 		{
 			const IOnlineSessionPtr Sessions = IOnlineSubsystem::Get()->GetSessionInterface();
-			if(const FOnlineSession* CurrentSession = Sessions->GetNamedSession(NAME_GameSession))
+			if(const FOnlineSession* CurrentSession = Sessions->GetNamedSession(VSessionName))
 			{
 				OnSuccess.Broadcast(CurrentSession->SessionInfo.Get()->GetSessionId().ToString());
 				bDelegateCalled = true;
 				SetReadyToDestroy();
+				MarkAsGarbage();
 			}
 			else
 			{
 				OnSuccess.Broadcast("");
 				bDelegateCalled = true;
 				SetReadyToDestroy();
+				MarkAsGarbage();
 			}
-			OnSuccess.Broadcast("");
-			bDelegateCalled = true;
-			SetReadyToDestroy();
 		}
 	}
 	else
@@ -114,18 +115,22 @@ void UEIK_CreateSession_AsyncFunction::OnCreateSessionCompleted(FName VSessionNa
 			OnFail.Broadcast("");
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+			MarkAsGarbage();
 		}
 	}
 }
 
 UEIK_CreateSession_AsyncFunction* UEIK_CreateSession_AsyncFunction::CreateEIKSession(
-	TMap<FString, FEIKAttribute> SessionSettings, int32 NumberOfPublicConnections,
+	TMap<FString, FEIKAttribute> SessionSettings,
+		FName SessionName,
+		int32 NumberOfPublicConnections,
 	FDedicatedServerSettings DedicatedServerSettings, FCreateSessionExtraSettings ExtraSettings)
 {
 	UEIK_CreateSession_AsyncFunction* Ueik_CreateSessionObject= NewObject<UEIK_CreateSession_AsyncFunction>();
 	Ueik_CreateSessionObject->SessionSettings = SessionSettings;
 	Ueik_CreateSessionObject->NumberOfPublicConnections = NumberOfPublicConnections;
 	Ueik_CreateSessionObject->DedicatedServerSettings = DedicatedServerSettings;
+	Ueik_CreateSessionObject->VSessionName = SessionName;
 	Ueik_CreateSessionObject->ExtraSettings = ExtraSettings;
 	return Ueik_CreateSessionObject;
 }

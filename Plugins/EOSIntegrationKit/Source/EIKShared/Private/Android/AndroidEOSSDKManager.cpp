@@ -1,8 +1,8 @@
-//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "AndroidEOSSDKManager.h"
 
-#include "ThirdParty/EIKSDK/Bin/Android/include/Android/eos_android.h"
+#include "Android/eos_android.h"
 #include "HAL/FileManager.h"
 
 #if WITH_EOS_SDK

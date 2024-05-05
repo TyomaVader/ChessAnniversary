@@ -1,8 +1,9 @@
-﻿//Copyright (c) 2023 Betide Studio. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 
 #include "EIK_GetStats_AsyncFunction.h"
 
+#include "OnlineError.h"
 #include "OnlineStatsEOS.h"
 #include "OnlineSubsystemEIK/Subsystem/EIK_Subsystem.h"
 
@@ -35,6 +36,7 @@ void UEIK_GetStats_AsyncFunction::GetStats()
 						OnFail.Broadcast(TArray<FEIK_Stats>());
 						bDelegateCalled = true;
 						SetReadyToDestroy();
+MarkAsGarbage();
 					}
 				}
 				Usersvar.Add(IdentityPointerRef->GetUniquePlayerId(0).ToSharedRef());
@@ -47,6 +49,7 @@ void UEIK_GetStats_AsyncFunction::GetStats()
 					OnFail.Broadcast(TArray<FEIK_Stats>());
 					bDelegateCalled = true;
 					SetReadyToDestroy();
+MarkAsGarbage();
 				}
 			}
 		}
@@ -57,6 +60,7 @@ void UEIK_GetStats_AsyncFunction::GetStats()
 				OnFail.Broadcast(TArray<FEIK_Stats>());
 				bDelegateCalled = true;
 				SetReadyToDestroy();
+MarkAsGarbage();
 			}
 		}
 	}
@@ -67,6 +71,7 @@ void UEIK_GetStats_AsyncFunction::GetStats()
 			OnFail.Broadcast(TArray<FEIK_Stats>());
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+MarkAsGarbage();
 		}
 	}
 }
@@ -95,6 +100,7 @@ void UEIK_GetStats_AsyncFunction::OnGetStatsCompleted(const FOnlineError& Result
 			OnSuccess.Broadcast(LocalStatsArray);
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+MarkAsGarbage();
 		}
 	}
 	else
@@ -104,6 +110,7 @@ void UEIK_GetStats_AsyncFunction::OnGetStatsCompleted(const FOnlineError& Result
 			OnFail.Broadcast(TArray<FEIK_Stats>());
 			bDelegateCalled = true;
 			SetReadyToDestroy();
+MarkAsGarbage();
 		}
 	}
 }
