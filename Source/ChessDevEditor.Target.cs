@@ -8,9 +8,9 @@ public class ChessDevEditorTarget : TargetRules
 	public ChessDevEditorTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
-		DefaultBuildSettings = BuildSettingsVersion.V2;
-		// IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
-		ExtraModuleNames.AddRange(new string[] { "ChessDev"});
+		DefaultBuildSettings = BuildSettingsVersion.V4;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+		ExtraModuleNames.AddRange(new string[] { "ChessDev" });
 
 		bUseUnityBuild = false;
 	}
