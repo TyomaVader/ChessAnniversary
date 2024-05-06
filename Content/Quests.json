@@ -1,17 +1,17 @@
-{
-	"quests": [
-		{
-			"name": "TestName",
-			"description": "TestDescription",
-			"progress": 3,
-			"questSteps": [
-				{
-					"description": "TestDescription",
-					"progressTotal": 2,
-					"progress": 8,
-					"triggerId": 0
-				}
-			]
-		}
-	]
+{
+	"quests": [
+		{
+			"name": "TestName",
+			"description": "TestDescription",
+			"progress": 4,
+			"questSteps": [
+				{
+					"description": "TestDescription",
+					"progressTotal": 2,
+					"progress": 9,
+					"triggerId": 0
+				}
+			]
+		}
+	]
 }
