@@ -6,48 +6,45 @@
 // Sets default values
 AChessEngine::AChessEngine()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+    // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 // Called when the game starts or when spawned
 void AChessEngine::BeginPlay()
 {
-	Super::BeginPlay();
-	
+    Super::BeginPlay();
 }
 
 // Called every frame
 void AChessEngine::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-
+    Super::Tick(DeltaTime);
 }
 
 void AChessEngine::setBoardPosition(const FString& shortFen, uint8 enPassant, bool whiteLongCastling, bool whiteShortCastling, bool blackLongCastling, bool blackShortCastling, float moveCtr)
 {
-	this->boardPosition = BoardPosition(
-		TCHAR_TO_UTF8(*shortFen),
-		(uint8_t)enPassant,
-		whiteLongCastling,
-		whiteShortCastling,
-		blackLongCastling,
-		blackShortCastling,
-		moveCtr
-	);
+    this->boardPosition = BoardPosition(
+        TCHAR_TO_UTF8(*shortFen),
+        (uint8_t)enPassant,
+        whiteLongCastling,
+        whiteShortCastling,
+        blackLongCastling,
+        blackShortCastling,
+        moveCtr
+    );
 }
 
 int AChessEngine::isGameFinished() const
 {
-	if (this->whiteVictory())
-	{
-		return 1;
-	} 
-	else if (this->blackVictory())
-	{
-		return 2;
-	}
+    if (this->whiteVictory())
+    {
+        return 1;
+    } 
+    else if (this->blackVictory())
+    {
+        return 2;
+    }
     else if (this->draw())
     {
         return 3;
@@ -60,17 +57,17 @@ int AChessEngine::isGameFinished() const
 
 bool AChessEngine::whiteVictory() const
 {
-	bool blackHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::Black).size() == 0);
+    bool blackHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::Black).size() == 0);
     bool blackInCheck = PsLegalMoveMaskGen::inDanger(this->boardPosition.pieces, bsf(this->boardPosition.pieces.pieceBitboards[Pieces::Black][Pieces::King]), Pieces::Black);
 
     if (blackHaventGotMoves && blackInCheck)
     {
         if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("White won!"));
-		}
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("White won!"));
+        }
 
-		UE_LOG(LogTemp, Display, TEXT("White won"))
+        UE_LOG(LogTemp, Display, TEXT("White won"))
     }
 
     return (blackHaventGotMoves && blackInCheck);
@@ -78,363 +75,381 @@ bool AChessEngine::whiteVictory() const
 
 bool AChessEngine::blackVictory() const
 {
-	bool whiteHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::White).size() == 0);
+    bool whiteHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::White).size() == 0);
     bool whiteInCheck = PsLegalMoveMaskGen::inDanger(this->boardPosition.pieces, bsf(this->boardPosition.pieces.pieceBitboards[Pieces::White][Pieces::King]), Pieces::White);
 
-	if (whiteHaventGotMoves && whiteInCheck)
-	{
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Black won!"));
-		}
+    if (whiteHaventGotMoves && whiteInCheck)
+    {
+        if(GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Black won!"));
+        }
 
-		UE_LOG(LogTemp, Display, TEXT("Black won"));
-	}
+        UE_LOG(LogTemp, Display, TEXT("Black won"));
+    }
 
-	return (whiteHaventGotMoves && whiteInCheck);
+    return (whiteHaventGotMoves && whiteInCheck);
 }
 
 bool AChessEngine::draw() const
 {
-	bool whiteHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::White).size() == 0);
-	bool whiteInCheck = PsLegalMoveMaskGen::inDanger(this->boardPosition.pieces, bsf(this->boardPosition.pieces.pieceBitboards[Pieces::White][Pieces::King]), Pieces::White);
+    bool whiteHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::White).size() == 0);
+    bool whiteInCheck = PsLegalMoveMaskGen::inDanger(this->boardPosition.pieces, bsf(this->boardPosition.pieces.pieceBitboards[Pieces::White][Pieces::King]), Pieces::White);
 
-	bool blackHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::Black).size() == 0);
-	bool blackInCheck = PsLegalMoveMaskGen::inDanger(this->boardPosition.pieces, bsf(this->boardPosition.pieces.pieceBitboards[Pieces::Black][Pieces::King]), Pieces::Black);
+    bool blackHaventGotMoves = (LegalMoveGen::generate(this->boardPosition, Pieces::Black).size() == 0);
+    bool blackInCheck = PsLegalMoveMaskGen::inDanger(this->boardPosition.pieces, bsf(this->boardPosition.pieces.pieceBitboards[Pieces::Black][Pieces::King]), Pieces::Black);
 
-	bool fiftyMovesRule = (this->boardPosition.fiftyMovesCtr >= 50);
-	bool threeMovesRule = (this->boardPosition.repetitionHistory.getRepetionNumber(this->boardPosition.hash) >= 3);
+    bool fiftyMovesRule = (this->boardPosition.fiftyMovesCtr >= 50);
+    bool threeMovesRule = (this->boardPosition.repetitionHistory.getRepetionNumber(this->boardPosition.hash) >= 3);
 
-	bool whiteMove = this->isWhiteMove();
-	bool blackMove = !whiteMove;
+    bool whiteMove = this->isWhiteMove();
+    bool blackMove = !whiteMove;
 
-	if (whiteHaventGotMoves && !whiteInCheck && whiteMove)
-	{
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] White haven't got moves."));
-		}
+    if (whiteHaventGotMoves && !whiteInCheck && whiteMove)
+    {
+        if(GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] White haven't got moves."));
+        }
 
-		UE_LOG(LogTemp, Display, TEXT("[DRAW] White haven't got moves."));
+        UE_LOG(LogTemp, Display, TEXT("[DRAW] White haven't got moves."));
 
-		return true;
-	}
+        return true;
+    }
 
-	if (blackHaventGotMoves && !blackInCheck && blackMove)
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Black haven't got moves."));
-		}
+    if (blackHaventGotMoves && !blackInCheck && blackMove)
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Black haven't got moves."));
+        }
 
-		UE_LOG(LogTemp, Display, TEXT("[DRAW] Black haven't got moves."));
+        UE_LOG(LogTemp, Display, TEXT("[DRAW] Black haven't got moves."));
 
-		return true;
-	}
+        return true;
+    }
 
-	if (fiftyMovesRule)
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Fifty moves rule."));
-		}
+    if (fiftyMovesRule)
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Fifty moves rule."));
+        }
 
-		UE_LOG(LogTemp, Display, TEXT("[DRAW] Fifty moves rule."));
+        UE_LOG(LogTemp, Display, TEXT("[DRAW] Fifty moves rule."));
 
-		return true;
-	}
+        return true;
+    }
 
-	if (threeMovesRule)
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Three moves rule."));
-		}
+    if (threeMovesRule)
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("[DRAW] Three moves rule."));
+        }
 
-		UE_LOG(LogTemp, Display, TEXT("[DRAW] Three moves rule."));
+        UE_LOG(LogTemp, Display, TEXT("[DRAW] Three moves rule."));
 
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 bool AChessEngine::isWhiteMove() const
 {
-	return (this->boardPosition.MoveCtr - floor(this->boardPosition.MoveCtr) < 1e-7);
+    return (this->boardPosition.MoveCtr - floor(this->boardPosition.MoveCtr) < 1e-7);
 }
 
 bool AChessEngine::isBlackMove() const
 {
-	return !this->isWhiteMove();
+    return !this->isWhiteMove();
 }
 
-bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece)
+bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, bool& bIsCastling)
 {
-	this->moves = LegalMoveGen::generate(this->boardPosition, side);
+    bIsCastling = false;
 
-	ChessMove currMove;
-	currMove.From = from.Y + from.X * 8;
-	currMove.To = to.Y + to.X * 8;
+    this->moves = LegalMoveGen::generate(this->boardPosition, side);
 
-	this->playerMove = currMove;
+    ChessMove currMove;
+    currMove.From = from.Y + from.X * 8;
+    currMove.To = to.Y + to.X * 8;
 
-	bool moveFound = false;
+    this->playerMove = currMove;
 
-	for (uint8_t i = 0; i < moves.size(); i++)
-	{
-		if (moves[i].From == playerMove.From && moves[i].To == playerMove.To && (moves[i].Flag != ChessMove::Flag::PromoteToKnight && moves[i].Flag != ChessMove::Flag::PromoteToBishop && moves[i].Flag != ChessMove::Flag::PromoteToRook && moves[i].Flag != ChessMove::Flag::PromoteToQueen))
-		{
-			move = moves[i];
-			moveFound = true;
+    bool moveFound = false;
 
-			break;
-		} else 
-		if (moves[i].From == playerMove.From && moves[i].To == playerMove.To)
-		{
-			switch (promotionPiece)
-			{
-				case 1:
-					move = moves[i];
-					move.Flag = ChessMove::Flag::PromoteToKnight;
-					moveFound = true;
-				break;
+    for (uint8_t i = 0; i < moves.size(); ++i)
+    {
+        if (moves[i].From == playerMove.From && moves[i].To == playerMove.To && (moves[i].Flag == ChessMove::Flag::WhiteLongCastling || moves[i].Flag == ChessMove::Flag::WhiteShortCastling || moves[i].Flag == ChessMove::Flag::BlackLongCastling || moves[i].Flag == ChessMove::Flag::BlackShortCastling))
+        {
+            bIsCastling = true;
 
-				case 2:
-					move = moves[i];
-					move.Flag = ChessMove::Flag::PromoteToBishop;
-					moveFound = true;
-				break;
+            move = moves[i];
+            moveFound = true;
 
-				case 3:
-					move = moves[i];
-					move.Flag = ChessMove::Flag::PromoteToRook;
-					moveFound = true;
-				break;
+            break;
+        } else
+        if (moves[i].From == playerMove.From && moves[i].To == playerMove.To && (moves[i].Flag != ChessMove::Flag::PromoteToKnight && moves[i].Flag != ChessMove::Flag::PromoteToBishop && moves[i].Flag != ChessMove::Flag::PromoteToRook && moves[i].Flag != ChessMove::Flag::PromoteToQueen))
+        {
+            move = moves[i];
+            moveFound = true;
 
-				case 4:
-					move = moves[i];
-					move.Flag = ChessMove::Flag::PromoteToQueen;
-					moveFound = true;
-				break;
+            break;
+        } else 
+        if (moves[i].From == playerMove.From && moves[i].To == playerMove.To)
+        {
+            switch (promotionPiece)
+            {
+                case 1:
+                    move = moves[i];
+                    move.Flag = ChessMove::Flag::PromoteToKnight;
+                    moveFound = true;
+                break;
 
-				default:
-					if (GEngine)
-					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Invalid promotion piece!"));
-					}
+                case 2:
+                    move = moves[i];
+                    move.Flag = ChessMove::Flag::PromoteToBishop;
+                    moveFound = true;
+                break;
 
-					UE_LOG(LogTemp, Warning, TEXT("[ERROR] Invalid promotion piece!"));
-					
-					continue;
-				break;
-			}
+                case 3:
+                    move = moves[i];
+                    move.Flag = ChessMove::Flag::PromoteToRook;
+                    moveFound = true;
+                break;
 
-			break;
-		}
-	}
+                case 4:
+                    move = moves[i];
+                    move.Flag = ChessMove::Flag::PromoteToQueen;
+                    moveFound = true;
+                break;
 
-	if (!moveFound)
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Illegal move!"));
-		}
+                default:
+                    if (GEngine)
+                    {
+                        GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Invalid promotion piece!"));
+                    }
 
-		UE_LOG(LogTemp, Warning, TEXT("[ERROR] Illegal move!"));
-		
-		return false;
-	}
+                    UE_LOG(LogTemp, Warning, TEXT("[ERROR] Invalid promotion piece!"));
+                    
+                    continue;
+                break;
+            }
 
-	this->boardPosition.move(move);
+            break;
+        }
+    }
 
-	if (move.DefenderType != 255)
-	{
-		switch (move.DefenderType)
-		{
-		case 0:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
-			}
+    if (!moveFound)
+    {
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Illegal move!"));
+        }
 
-			UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
+        UE_LOG(LogTemp, Warning, TEXT("[ERROR] Illegal move!"));
+        
+        return false;
+    }
 
-			break;
+    this->boardPosition.move(move);
 
-		case 1:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
-			}
+    if (move.DefenderType != 255)
+    {
+        switch (move.DefenderType)
+        {
+        case 0:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
+            }
 
-			UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
+            UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
 
-			break;
+            break;
 
-		case 2:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
-			}
+        case 1:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
+            }
 
-			UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
+            UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
 
-			break;
+            break;
 
-		case 3:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
-			}
+        case 2:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
+            }
 
-			UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
+            UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
 
-			break;
+            break;
 
-		case 4:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
-			}
+        case 3:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
+            }
 
-			UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
+            UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
 
-			break;
+            break;
 
-		default:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
-			}
+        case 4:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
+            }
 
-			UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
+            UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
 
-			break;
-		}
-	}
+            break;
 
-	return true;
+        default:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
+            }
+
+            UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
+
+            break;
+        }
+    }
+
+    return true;
 }
 
-void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece)
+void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece, bool& bIsCastling)
 {
-	this->move = ai.bestMove(boardPosition, 1, 0, 1000);
+    bIsCastling = false;
 
-	this->boardPosition.move(move);
+    this->move = ai.bestMove(boardPosition, 1, 0, 1000);
 
-	if (move.DefenderType != 255)
-	{
-		switch (move.DefenderType)
-		{
-		case 0:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
-			}
+    this->boardPosition.move(move);
 
-			UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
+    if (move.DefenderType != 255)
+    {
+        switch (move.DefenderType)
+        {
+        case 0:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
+            }
 
-			break;
+            UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
 
-		case 1:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
-			}
+            break;
 
-			UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
+        case 1:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
+            }
 
-			break;
+            UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
 
-		case 2:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
-			}
+            break;
 
-			UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
+        case 2:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
+            }
 
-			break;
+            UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
 
-		case 3:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
-			}
+            break;
 
-			UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
+        case 3:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
+            }
+
+            UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
 
 
-			break;
+            break;
 
-		case 4:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
-			}
+        case 4:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
+            }
 
-			UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
+            UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
 
-			break;
+            break;
 
-		default:
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
-			}
+        default:
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
+            }
 
-			UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
+            UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
-	from = FIntPoint(move.From / 8, move.From % 8);
-	to = FIntPoint(move.To / 8, move.To % 8);
+    from = FIntPoint(move.From / 8, move.From % 8);
+    to = FIntPoint(move.To / 8, move.To % 8);
 
-	if (move.Flag > 6)
-	{
-		promotionPiece = int8(move.Flag % 6);
-	} else
-	{
-		promotionPiece = int8(0);
-	}
+    if (move.Flag > 6)
+    {
+        promotionPiece = int8(move.Flag % 6);
+    } else
+    {
+        promotionPiece = int8(0);
+    }
+
+    if (move.Flag == ChessMove::Flag::WhiteLongCastling || move.Flag == ChessMove::Flag::WhiteShortCastling || move.Flag == ChessMove::Flag::BlackLongCastling || move.Flag == ChessMove::Flag::BlackShortCastling)
+    {
+        bIsCastling = true;
+    }
 }
 
-bool AChessEngine::makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, uint8 pieceToSpawn)
+bool AChessEngine::makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, uint8 pieceToSpawn, bool& bIsCastling)
 {
-	if (pieceToSpawn != 0)
-	{
-		switch (pieceToSpawn)
-		{
-		case 1:
-			this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Pawn, side);
-			break;
+    if (pieceToSpawn != 0)
+    {
+        switch (pieceToSpawn)
+        {
+        case 1:
+            this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Pawn, side);
+            break;
 
-		case 2:
-			this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Knight, side);
-			break;
+        case 2:
+            this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Knight, side);
+            break;
 
-		case 3:
-			this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Bishop, side);
-			break;
+        case 3:
+            this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Bishop, side);
+            break;
 
-		case 4:
-			this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Rook, side);
-			break;
+        case 4:
+            this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Rook, side);
+            break;
 
-		case 5:
-			this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Queen, side);
-			break;
-		
-		default:
-			return false;
-			break;
-		}
+        case 5:
+            this->boardPosition.addPiece(to.Y + to.X * 8, Pieces::Queen, side);
+            break;
+        
+        default:
+            return false;
+            break;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	return this->makeMove(from, to, side, promotionPiece);
+    return this->makeMove(from, to, side, promotionPiece, bIsCastling);
 }
