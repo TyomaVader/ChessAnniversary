@@ -166,9 +166,11 @@ bool AChessEngine::isBlackMove() const
     return !this->isWhiteMove();
 }
 
-bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, bool& bIsCastling)
+bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, bool& bIsCastling, int& whiteScoreChange, int& blackScoreChange)
 {
     bIsCastling = false;
+    whiteScoreChange = 0;
+    blackScoreChange = 0;
 
     this->moves = LegalMoveGen::generate(this->boardPosition, side);
 
@@ -248,7 +250,6 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
         {
             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Illegal move!"));
         }
-
         UE_LOG(LogTemp, Warning, TEXT("[ERROR] Illegal move!"));
         
         return false;
@@ -265,8 +266,9 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
+
+            playerMove.AttackerSide == Pieces::White ? whiteScoreChange = 1 : blackScoreChange = 1;
 
             break;
 
@@ -275,8 +277,9 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
+
+            playerMove.AttackerSide == Pieces::White ? whiteScoreChange = 3 : blackScoreChange = 3;
 
             break;
 
@@ -285,8 +288,9 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
+
+            playerMove.AttackerSide == Pieces::White ? whiteScoreChange = 3 : blackScoreChange = 3;
 
             break;
 
@@ -295,8 +299,9 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
+
+            playerMove.AttackerSide == Pieces::White ? whiteScoreChange = 5 : blackScoreChange = 5;
 
             break;
 
@@ -305,8 +310,9 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
+
+            playerMove.AttackerSide == Pieces::White ? whiteScoreChange = 9 : blackScoreChange = 9;
 
             break;
 
@@ -315,7 +321,6 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
             }
-
             UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
 
             break;
@@ -325,9 +330,11 @@ bool AChessEngine::makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 prom
     return true;
 }
 
-void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece, bool& bIsCastling)
+void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece, bool& bIsCastling, int& whiteScoreChange, int& blackScoreChange)
 {
     bIsCastling = false;
+    whiteScoreChange = 0;
+    blackScoreChange = 0;
 
     this->move = ai.bestMove(boardPosition, 1, 0, 1000);
 
@@ -342,8 +349,9 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Pawn has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Pawn has been captured!"));
+
+            move.AttackerSide == Pieces::White ? whiteScoreChange = 1 : blackScoreChange = 1;
 
             break;
 
@@ -352,8 +360,9 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Knight has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Knight has been captured!"));
+
+            move.AttackerSide == Pieces::White ? whiteScoreChange = 3 : blackScoreChange = 3;
 
             break;
 
@@ -362,8 +371,9 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Bishop has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Bishop has been captured!"));
+
+            move.AttackerSide == Pieces::White ? whiteScoreChange = 3 : blackScoreChange = 3;
 
             break;
 
@@ -372,9 +382,9 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Rook has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Rook has been captured!"));
 
+            move.AttackerSide == Pieces::White ? whiteScoreChange = 5 : blackScoreChange = 5;
 
             break;
 
@@ -383,8 +393,9 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Queen has been captured!"));
             }
-
             UE_LOG(LogTemp, Display, TEXT("Queen has been captured!"));
+
+            move.AttackerSide == Pieces::White ? whiteScoreChange = 9 : blackScoreChange = 9;
 
             break;
 
@@ -393,7 +404,6 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
             {
                 GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("[ERROR] Unknown piece type!"));
             }
-
             UE_LOG(LogTemp, Warning, TEXT("[ERROR] Unknown piece type!"));
 
             break;
@@ -417,7 +427,7 @@ void AChessEngine::makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPi
     }
 }
 
-bool AChessEngine::makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, uint8 pieceToSpawn, bool& bIsCastling)
+bool AChessEngine::makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, uint8 pieceToSpawn, bool& bIsCastling, int& whiteScoreChange, int& blackScoreChange)
 {
     if (pieceToSpawn != 0)
     {
@@ -451,5 +461,5 @@ bool AChessEngine::makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 p
         return true;
     }
 
-    return this->makeMove(from, to, side, promotionPiece, bIsCastling);
+    return this->makeMove(from, to, side, promotionPiece, bIsCastling, whiteScoreChange, blackScoreChange);
 }

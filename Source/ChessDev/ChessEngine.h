@@ -53,7 +53,7 @@ public:
      * @retval False The move is illegal.
     */
     UFUNCTION(BlueprintCallable, Category = "ChessEngine")
-    bool makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, bool& bIsCastling);
+    bool makeMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, bool& bIsCastling, int& whiteScoreChange, int& blackScoreChange);
 
     /**
      * @brief AI chooses the best move and makes it.
@@ -65,10 +65,10 @@ public:
      * @return void
     */
     UFUNCTION(BlueprintCallable, Category = "ChessEngine")
-    void makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece, bool& bIsCastling);
+    void makeAIMove(FIntPoint& from, FIntPoint& to, uint8& promotionPiece, bool& bIsCastling, int& whiteScoreChange, int& blackScoreChange);
 
     UFUNCTION(BlueprintCallable, Category = "ChessEngine")
-    bool makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, uint8 pieceToSpawn, bool& bIsCastling);
+    bool makeCCGMove(FIntPoint from, FIntPoint to, uint8 side, uint8 promotionPiece, uint8 pieceToSpawn, bool& bIsCastling, int& whiteScoreChange, int& blackScoreChange);
 
 protected:
     bool whiteVictory() const;
